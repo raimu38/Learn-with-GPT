@@ -87,6 +87,99 @@ function identity(arg) {
   return arg;
 }
 
+// 解説6
+// ジェネリック型は、関数やクラスがさまざまな型で動作することを可能にします。
 function identity<T>(arg: T): T {
   return arg;
 }
+// ここでは、Tは任意の型を表し、argと戻り値が同じ型であることを保証します。
+
+// 問題7: 非nullアサーション
+// 次のコードに非nullアサーションを使用してください。
+let myValue: string | null = null;
+console.log(myValue.length);
+
+// 解説7
+// 非nullアサーションは、変数がnullでないことを保証します。
+let myValue: string | null = null;
+console.log(myValue!.length);
+// これにより、myValueがnullでないことを保証し、lengthプロパティにアクセスできます。
+
+// 問題8: オプショナルチェイニング
+// 次のコードにオプショナルチェイニングを使用してください。
+const user = {
+  name: "Alice",
+  address: {
+    street: "123 Main St",
+    city: "Wonderland"
+  }
+};
+
+console.log(user.address.street);
+
+// 解説8
+// オプショナルチェイニングは、オブジェクトのプロパティが存在するかどうかを確認せずにアクセスできます。
+const user = {
+  name: "Alice",
+  address: {
+    street: "123 Main St",
+    city: "Wonderland"
+  }
+};
+
+console.log(user.address?.street)
+// これにより、addressが存在しない場合でもエラーを避けることができます。
+
+// 問題9: 型ガード
+// 次の関数に型ガードを追加してください。
+function isString(value: any): boolean {
+  return typeof value === 'string';
+}
+
+function printValue(value: string | number) {
+  if (isString(value)) {
+    console.log(`String: ${value}`);
+  } else {
+    console.log(`Number: ${value}`);
+  }
+}
+
+// 解説9
+// 型ガードは、ランタイムで型を確認し、安全に値を操作するために使用されます。
+
+function isString(value: any): value is string {
+  return typeof value === 'string';
+}
+
+function printValue(value: string | number) {
+  if (isString(value)) {
+    console.log(`String: ${value}`);
+  } else {
+    console.log(`Number: ${value}`);
+  }
+}
+// ここでは、isString関数が値が文字列であることを保証する型ガードとして機能します。
+
+// 問題10: 型のインターセクション
+// 次のコードに型のインターセクションを使用してください。
+                  
+type Name = { name: string };
+type Age = { age: number };
+
+const person: Name & Age = {
+  name: "Alice",
+  age: 25
+};
+
+type Name = { name: string };
+type Age =  { age : number };
+
+const person: Name & Age = {
+  name: "Alice",
+  age : 19
+};
+
+
+
+
+
