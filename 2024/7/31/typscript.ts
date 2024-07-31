@@ -33,13 +33,60 @@ const user = {
   isStudent: true
 };
 
-interface: User = {
-  name: stirng;
+
+// 解説3
+// インターフェースは、オブジェクトの構造を定義するために使用されます。
+interface User {
+  name: string;
   age: number;
   isStudent: boolean;
 }
-const user:User ={
+
+const user: User = {
   name: "Alice",
   age: 25,
   isStudent: true
 };
+// これにより、userオブジェクトがUserインターフェースに従うことが保証されます。
+
+// 問題4: ユニオン型
+// 次の関数にユニオン型を使用して型注釈を追加してください。
+
+function printId(id) {
+  console.log(id);
+}
+// 解説4
+// ユニオン型は、変数が複数の型を持つことを許可します。
+
+function printId(id: number | string): void {
+  console.log(id)
+}
+// ここでは、idは数値または文字列のいずれかであり、戻り値はvoid（何も返さない）です。
+
+// 問題5: 型のエイリアス
+// 次のコードに型のエイリアスを使用してください。
+type Point = { x: number, y: number };
+
+function printPoint(point: { x: number, y: number }) {
+  console.log(`x: ${point.x}, y: ${point.y}`);
+}
+
+
+// 解説5
+// 型のエイリアスは、複雑な型を簡潔に表現するために使用されます。
+type Point = { x: number, y: number };
+
+function printPoint(point: Point): void {
+  console.log(`x: ${point.x}, y: ${point.y}`);
+}
+// これにより、Point型が再利用可能になり、コードの可読性が向上します。
+
+// 問題6: ジェネリック型
+// 次の関数にジェネリック型を追加してください。
+function identity(arg) {
+  return arg;
+}
+
+function identity<T>(arg: T): T {
+  return arg;
+}
