@@ -1,0 +1,112 @@
+
+// 以下のようなデータ構造で授業情報を持っているとする。
+{
+  "classID":"class1",
+  "day":"Tueseday",
+  "courseName":"math",
+  "time":"10:00"
+}
+
+import {collection,
+const classesRef = collection(firestore, "classes")
+const q = query(classRef, where("day" = "Tuesday"));
+
+const querySnapshot = await getDocs(q);
+querySnapshot.forEach((doc) => {
+  console.log(doc.id, "=>" , doc.data());
+});
+
+// コレクション内のドキュメントの個数を数える方法
+
+import {collection} from 'firebase/firesotre';
+const studentsRef = firestore.collection('students');
+studentsRef.get().then((querySnapshot) => {
+  console.log('Number of studentscollection is ' , querySnapshot.size)
+});
+
+// ↑コレクション内にドキュメントが50個ある場合：50回の読み取り
+// コレクション内にドキュメントが200個ある場合：200回の読み取り
+// これを避けるためには、ドキュメント数を管理するために追加のフィールドを使うか、リアルタイムデータベースなどの他の方法を検討する必要があります。
+//これは避けるべき
+
+
+doc((
+・特定のドキュメントへの参照を取得
+
+const docRef = doc(firestore, "collectionName", "documentID");
+const docRef = doc(firesotre, "collectionName", "documentID");
+
+await setDoc(docRef, {field: "value"});
+
+const docSnap = await getDoc(docRef);
+const docSnap = await getDoc(docRef);
+
+await updateDoc(docRef, {field: "newValue"});
+
+await deleteDoc(docRef);
+
+//コレクション操作
+
+collection()
+
+const colRef = collection(firestore, 'collectionName');
+ドキュメントを追加
+await addDoc(colRef, {field: 'value'}
+
+コレクション内の全ドキュメント取得
+await querySnapshot = await getDocs(colRef);
+
+
+Query操作
+
+const q = query(colRef, where("field", "==" ,"value"));
+・クエリの条件付与
+const q = query(colRef, where("field", "==", "value"));
+・クエリの結果を並び替え
+const q = query(colRef, orderBy("field"));
+・クエリの数を制限
+const q = query(colRef,  limit(10));
+
+
+runTransaction()
+
+await runTransaction(firestore, async (transaction) =>{
+const docSanp = await transaction.get(docRef);
+if(!docSnap.exists()){
+  transaction.set(docRef, {field: "value});
+}
+});
+
+const batch = writeBatch(firestore);
+batch.set(docRef, {field: "value})
+await batch.commit();
+
+onSnapshot(docRef, (docSnap) => {
+ console.lopg("Current data: ",docSnap.data());
+ });
+
+
+ const colRef = firestore.collection("users")
+
+await addDoc(colRef, "userA");
+const docRef = doc(firestore, "users", "userA")
+await setdoc(docRef, {"name": "Katou", "age": "15"})
+
+const docSnap = await  getDoc(docRef)
+console.log("NAme : "docSnap.name 
+
+const colRef = collection(firestore, "users")
+const docRef = doc(colRef, "userA");
+await setDoc(docRef, {{"name": "Katou"}, {"age": "29"}});
+const docSnap = await getDoc(docRef);
+console.log(docSnap.data())
+
+const colRef = collection(firestore, "users");
+const docRef = doc(colRef, "userA");
+await setDoc(docRef, {name: "Katou", age : 13});
+const docSnap = await getDoc(docRef);
+console.log(docSnap.data());
+
+
+
+
