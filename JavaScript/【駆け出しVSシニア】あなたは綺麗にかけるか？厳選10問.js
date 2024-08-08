@@ -28,3 +28,28 @@ function feedsneer({name, age}){
 feed(user)
 feed1(user)
 feedsneer(user)
+
+
+// 18歳以上ならI'm an adult at 27 years old
+// 18歳未満ならI'm an young at 15 years old
+const user = { name: "watanabe", age: 27, isMen: true }
+
+const {age} = user
+const ageStr = age > 18 ? "adult" :"young";
+const bio = `I`m an ${ageStr} at ${age} years old`;
+console.log(bio);
+function hello({age}){
+console.log(`I`m an ${age>=18 ? 'adult' : 'young'} at ${age} years old`)
+}
+
+functioin hello(user)
+
+
+
+
+// 配列の各要素を操作し、合計値、税金を含む新しい配列、および100いじょうを満たす要素の配列を作成してください。
+const orders = [500, 30, 99, 15, 223];
+
+const 
+
+
