@@ -268,7 +268,17 @@ const [loading, setLoading] = useState<boolean>(true);
 |                           |
 +---------------------------+
 
+全体の流れ
+createContext:
 
+コンテキストを作成します。これにより、コンテキストオブジェクトが生成され、プロバイダーとコンシューマーの機能が提供されます。
+UserProvider:
+
+作成したコンテキストオブジェクトのプロバイダーコンポーネントです。valueプロパティにコンテキストの値を設定し、それを子コンポーネントに提供します。
+Component A と Component B:
+
+これらのコンポーネントは、useContextフックを使用してUserProviderから提供されたコンテキストの値にアクセスします。コンポーネントがUserProviderでラップされている限り、コンテキストの値を共有し、使用することができます。
+このようにして、コンテキストを使用することで、複数のコンポーネント間でデータを簡単に共有し、管理することができます。
       
   
 コンポーネントとコンテキストの関係図
@@ -292,6 +302,96 @@ const [loading, setLoading] = useState<boolean>(true);
 +---------------------+
 
 
+  ラップするとはコンポーネントを他のコンポーネントで囲むこと
+    ラップしたコンポーネントを親呼ぶ
 
+意味: あるコンポーネントを他のコンポーネントで囲むこと。ラッピングしたコンポーネントは、ラップされたコンポーネントの親になります。
+効果: ラッピングしたコンポーネントが、ラップされたコンポーネントに対して共通の状態や機能を提供します。
+
+ラップする場合の例
+
+function App() {
+  return(
+    <UserProvider>
+      <ComponentA/>
+      <ComponentB/>
+    </UserProvider>
+  ) 
+}
+
+
+    function UserProvider({children}) {
+      const user = {name: "John Doe", age: 29};
+      return(
+        <UserContext.Provider value={user}>
+          {children}
+        </UserContext.Provider>  
+        
+      )
+    }
+
+    function ComponentA(){
+      const user = useConntext(UserContext);
+      return<div>User A : {user.name}</div>
+      
+    }
+
+    function ComponentB(){
+      const user = useContext(UserContext);
+      return <div>User B : {user.name}</div>
+    }
+
+
+
+import React, {createContext, useContext, ReactNode} from 'react';
+
+const UserContext = createContext<{name : string: age:number} | undefined>(undefined);
+
+function UserProvider({children}: {children: ReacNode}){
+  const user = {name: 'John Doe', age: 43};
+
+  return(
+    <UserContext.Provider value={user}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+
+function ComponentA(){
+  const user = useContext(UserContext);
+  if(!user) return <div>Loading...</div>
+  return <div>User A: {user.name}</div>
+
+function ComponentB(){
+  const user = useContext(UserContext);
+  if(!user) return <div>Loading...</div>
+  return <div>User B: {user.name}</div>
+}
+
+
+
+function App(){
+  return(
+    <UserProvider>
+      <ComponentA/>
+      <ComponentB/>
+    </UserProvider>
+  )
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    
       
   
