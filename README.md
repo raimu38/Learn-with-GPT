@@ -1,2 +1,2 @@
-# Learn-with-GPT
+# Learn-with-GPT-KINDLE
 Learn Fundamental Programing Skills with Chat GPT
