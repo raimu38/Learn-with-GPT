@@ -205,6 +205,93 @@ const [loading, setLoading] = useState<boolean>(true);
 
   console.log(doubleNumbers);
 
+  export const UserProvider = ({children}: {chiledren: ReactNode}) =>{
+    const [user, setUser] = useState<any>(null);
+    const [loading, setLoding] = useState<boolean>(true);
+
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged(async (current) => {
+        if(currentUser){
+          const useRef = firestore.collection('users').doc(currentUser.uid);
+          const doc = await useRef.get();
+          if(doc.exists){
+            setUser(doc.data());
+          }
+        }else{
+          setUser(null);
+        }
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
+  },  []);
+
+    return(
+      <UserContext.Provider value={{user, loading}}>
+        {children}
+      </UserContext.Provider>
+    )
+    //UserCOntextを使用してコンポーネントツリー内のすべての子コンポーネントにユーザー情報とローディング情報を提供
 
 
+    useUserフック
+
+    export const useUser = () => {
+      const context = useContext(UserContext);
+      if (context === undefined){
+        trhow new Error('useUser must be used within a UserProvider');
+      }
+      return context;
+    };
+
+
+
+
+コンポーネントとフックの関係図
+
+    +---------------------------+
+|                           |
+|       React Component     |
+|                           |
+|   +-------------------+   |
+|   |                   |   |
+|   |  useState()       |   |
+|   |  useEffect()      |   |
+|   |  useContext()     |   |
+|   |                   |   |
+|   +-------------------+   |
+|                           |
+|   +-------------------+   |
+|   |  Custom Hook      |   |
+|   |  (e.g. useUser)   |   |
+|   +-------------------+   |
+|                           |
++---------------------------+
+
+
+      
+  
+コンポーネントとコンテキストの関係図
+    +---------------------+
+|  App                 |
+|                     |
+| +-----------------+  |
+| | UserProvider    |  |
+| | (createContext) |  |
+| |                 |  |
+| | +-------------+ |  |
+| | | Component A | |  |
+| | | (useContext) | |  |
+| | +-------------+ |  |
+| |                 |  |
+| | +-------------+ |  |
+| | | Component B | |  |
+| | | (useContext) | |  |
+| | +-------------+ |  |
+| +-----------------+  |
++---------------------+
+
+
+
+      
   
