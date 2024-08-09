@@ -121,6 +121,63 @@ Map内のフィールドの更新:
 
 
 
+新規ユーザーの追加
+  既存のMap内に新しいフィールドやデータを追加するには、updateメソッドを使用します。
+
+Firestore データ構造
+以下のようなデータ構造を持つFirestoreドキュメントがあるとします：
+/users
+  /userId
+    - userDetails: {
+        user1: {
+          name: "John Doe",
+          age: 30
+        },
+        user2: {
+          name: "Jane Smith",
+          age: 25
+        }
+      }
+ここで、userDetailsはMapで、その中にuser1やuser2といったサブMapがあります。
+
+新しいユーザー情報を追加する方法
+たとえば、user3という新しいユーザー情報をuserDetails Mapに追加したい場合、以下のように実行します。
+
+コード例
+
+import firebase form 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+const addUserDetails = asycn(newUserId, newName, newAge)=>{
+  const user = firebase.auth().currentUser;
+
+  if(!user){
+    console.log('No user is signend in.);
+    return;
+  }
+
+  const UserId = user.uid;
+  const db = firebase.firestore();
+  const userRef = db.collection('users').doc(userId);
+
+  try{
+    await userRef.update({
+      [`userDetails.${newUserId}`]:{
+        name: newName,
+        age: newAge
+      }
+      )};
+  console.log('New user details added successfully!');
+  }cathc(error){
+  console.error('Error adding new user details:', error);
+}
+};
+
+addUserDetails('user3', 'Alice', 24);
+
+
+
 
 
 
