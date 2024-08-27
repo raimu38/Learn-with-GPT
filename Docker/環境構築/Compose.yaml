@@ -1,0 +1,24 @@
+services: # （１）サービスコンテナ名
+  db:
+    image: mysql:5.7 # （２）イメージ名：タグ
+    volumes: # （４） ホストディレクトリ：コンテナ内のディクト例
+      - db_data:/var/lib/mysql 
+    restart: always
+    environment: # （６）　環境変数
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: your_database
+      MYSQL_USER: user_name
+      MYSQL_PASSWORD: user_password
+
+  web:
+    build: ./rails_project # （３）Dockerfileよりビルド
+    command: bundle exec rails s -p 3000 -b '0.0.0.0' # （９）コンテナ作成時に実行されるコマンド
+    volumes: # （４）　ホストディレクトリ：」コンテナ内のディレクトリ
+      - .:/myapp
+    ports: # （７）　ホストマシンのポート番号：コンテナのポート番号
+      - "3000:3000"
+    depends_on: # （８）1つ以上のサービスに依存　dbコンテナが先に開始されていることを確認
+      - db
+      
+volumes: # （５）　ここで定義されたボリュームはサービス内で使用できる
+    db_data:
