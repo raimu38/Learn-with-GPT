@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-title"><a href="#">My Work</a></h1>
+      <nav>
+        <ul id="header-ul">
+          <li><a href="#About">About</a></li>
+          <li><a href="#Works">Works</a></li>
+          <li><a href="#News">News</a></li>
+          <li><a href="#Contact">Contact</a></li>
+          <li>
+            <a href="https://www.instagram.com/"
+              ><img class="icon" src="./img/instagram_01.png" alt="instagram"
+            /></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div id="img_company">
+        <picture>
+          <source media="(max-width: 600px)" srcset="./img/mainvisual-sp.jpg" />
+          <img src="./img/mainvisual-pc.jpg" alt="Company" />
+        </picture>
+      </div>
+      <section id="About" class="wrapper">
+        <h2 class="secondetitle">About</h2>
+        <ul>
+          <li>Xxxxx Ashley</li>
+          <li>
+            2th Floor xxxxx Building x-x-x Nishiazabu, Minato-ku, Tokyo 106-0031
+            Japan
+          </li>
+          <li>tel: 000-0000-0000</li>
+          <li>url: wwww.xxxxxx.jp</li>
+          <li>mail: xxx@xxxxxxx.jp</li>
+        </ul>
+        <p>
+          プロフィールテキストテキストテキストテキストテキストテキストテキストテキストテキストスト
+          テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+          テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+        </p>
+      </section>
+      <section id="Works" class="wrapper">
+        <h2 class="secondetitle">Works</h2>
+        <div class="galallyA">
+          <div class="galallyB">
+            <img src="./img/works1.jpg" alt="Work1" />
+            <img src="./img/works2.jpg" alt="Work2" />
+            <img src="./img/works3.jpg" alt="Work3" />
+          </div>
+          <div class="galallyB">
+            <img src="./img/works4.jpg" alt="Work4" />
+            <img src="./img/works5.jpg" alt="Work5" />
+            <img src="./img/works6.jpg" alt="Work6" />
+          </div>
+        </div>
+      </section>
+
+      <section id="News" class="wrapper">
+        <h2 class="secondetitle">News</h2>
+        <div>
+          <dl>
+            <dt>2020.XX.XX</dt>
+            <dd>
+              デザイン雑誌「ＸＸＸＸＸＸ Vol.11』に掲載していただきました。
+            </dd>
+            <dt>2020.XX.XX</dt>
+            <dd>
+              ＸＸ月ＸＸ日から写真集「ＸＸＸＸＸＸＸ」の販売を開始します。
+            </dd>
+            <dt>2019.XX.XX</dt>
+            <dd>
+              【イベント開催のお知らせ】テキストテキストテキストテキストテキストテキストテキスト
+            </dd>
+            <dt>2019.XX.XX</dt>
+            <dd>
+              デザイン雑誌「ＸＸＸＸＸＸ Vol.10』に掲載していただきました。
+            </dd>
+            <dt>2019.XX.XX</dt>
+            <dd>
+              【個展開催のお知らせ】テキストテキストテキストテキストテキストテキストテキスト
+            </dd>
+          </dl>
+        </div>
+      </section>
+
+      <section id="Contact" class="wrapper">
+        <h2 class="secondetitle">Contact</h2>
+        <form action="#" method="post">
+          <dl>
+            <dt>
+              <label for="name">NAME</label>
+            </dt>
+            <dd>
+              <input type="text" id="name" name="user_name" />
+            </dd>
+            <dt>
+              <label for="E-mail">E-mail</label>
+            </dt>
+            <dd>
+              <input type="text" id="E-mail" name="user-email" />
+            </dd>
+          </dl>
+          <dt>
+            <label for="message">MESSAGE</label>
+          </dt>
+          <dd>
+            <input type="text" form="message" name="user-message" />
+          </dd>
+          <div class="button">
+            <input type="submit" value="送信" />
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer id="footer">
+      <div>
+        <p>© 2020 My Work</p>
+      </div>
+    </footer>
+  </body>
+</html>
