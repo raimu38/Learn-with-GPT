@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script> 
+    let a = 1;
+    let b = 2;
+    let hello = 'こんにちわ'
+
+    //みかんの合計です　今日は味噌ラーメンを自作した
+console.log(hello);
+    hello = 'さようなら';
+    console.log(hello);
+
+    //スネークケース: person_name 
+    
+    //キャメルケース personName
+    //パスカルケース PersonName
+  </script>
+
+  <script>
+    //c 1.1 は意味がわからない　 === マジックナンバーという　今後の運用時になんの意味乾かない
+    let c = 100;
+    console.log(c * 1.1);
+    //変数名はあとから見て誰編みても分かるようにする　 商品の価格を消費税込みで算出していると分かる。
+    const TAX_PRICE = 1.1;
+    let productPrice = 1000;
+
+    console.log(productPrice * TAX_PRICE);
+  </script>
+
+  <script>
+    let product_price = 1000;
+    let cart_item = 'りんご';
+    let favorite_sport_category = '球技';
+
+    let cartItem = 'りんご';
+    let favoriteSportCategory = '球技'  
+  </script>
+    <script>
+        console.log("This is Tom's house.");
+        console.log('This is Tom\'s house.');
+    </script>
+
+    <script>
+        //numberリテラル
+
+        console.log(1234 + 0.5);
+        console.log(1234 + .5);
+        console.log(3e4);
+        console.log(0b10000);
+        console.log(0o74);
+        console.log(0xa2)
+    </script>
+
+    <script>
+        "use strict";
+        let strictA = 35;
+        console.log(strictA);
+    </script>
+
+    <script>
+        //BigInt
+        console.log(2**55 + 1);
+        console.log(2n ** 55n + 1n);
+        let three = 3n;
+        let five = 5n;
+        console.log(5 / 3);
+        console.log(five / three);
+    </script>
+
+    <script>
+        let hello1 = 'こんにちわ';
+        console.log(hello1);
+        let null1 = null;
+        console.log(null1);
+        let name;
+        console.log(name);
+    </script>
+
+    <script>
+        console.log(.249)
+        console.log(1e3 + 10)
+    </script>
+
+    <script>
+        //オブジェクトリテラル
+        const obj = {
+            strProp : '文字列',
+            intProp : 123,
+            objectProp : {
+                subProp: "値",
+            },
+            intProp:246,
+            boolProp:false,
+
+        }
+
+        let person = {
+            name : {first: '太郎' , last : '独習',},
+            age: 18,
+        };
+
+        console.log(person.age)
+        console.log(person.name.first)
+
+        person.name.last = "スクール";
+        person.gender = "男",
+        person.family = {wife: '花子', child : '三郎'};
+        console.log(person)
+    </script>
+
+    <script>
+        //ブラ-ケット記法
+        const members = {
+            member1 : "Katou",
+            member2 : "Itou"
+        }
+        const keybase = "member";
+        members[keybase + "1"] = "Suzuki";
+        console.log(members[keybase + "1"])
+        console.log(members[keybase + "2"])
+    </script>
+
+    <script>
+        let person1 = {
+            name:{first:"Honoka", last:"Yamada"},
+            age:21
+        };
+
+        console.log(person1.name.first)
+        delete person1.age
+
+        console.log(person1.age)
+    </script>
+
+    <script>
+        //メソッド
+        let person3 = {
+            hello : function(){console.log("こんにちわ");}
+        };
+        person3.hello();
+        person3.bye = function(){console.log("さようなら")};
+        person3.bye();
+        person3.hello = function(){console.log("おはよう")};
+        person3.hello();
+    </script>
+
+    <script>
+        //組み込みオブジェクト
+        //window.alert(windowオブジェクトのalertメソッド) 
+        //console.log( コンソールオブジェクトのlogメソッド)
+    </script>
+    <script>
+        let obj1 = {
+            prop:true,
+            subobj:{
+                val:100
+            },
+            greeting(){console.log("こんにちわ")}
+
+        }
+        obj1.subobj.val2 = 1000;
+
+        let obj2 ={
+            ["prop"]:true,
+            ["subobj"]:{
+                ["val"]:100
+            },
+            ["greeting"]:function(){
+                console.log("こんにちわ");
+            }
+        }
+    </script>
+
+    <script>
+        //シンボル
+    console.log(Symbol());
+    console.log(Symbol('ラベルは目印'))
+
+     let mySymbol1 = Symbol();
+     let mySymbol2 = Symbol();
+
+     const obj3 = {
+        [mySymbol1] : "1",
+        [mySymbol2](){console.log('こんにちは');}
+     };
+
+     console.log(obj3[mySymbol1]);
+
+     obj3[mySymbol2]();
+    </script>
+    <script>
+        console.log(Number("1"));
+        console.log(Number("hello"));
+        console.log(Number(true));
+        console.log(Number(false));
+        console.log(Boolean(1))
+        console.log(Boolean(10))
+        console.log(Boolean(0))
+        console.log(Boolean(-1))
+        console.log(String(32));
+        console.log(String(true));
+        console.log(String('false'));
+        console.log(BigInt("389"));
+        console.log(1 + Number('89'))
+        console.log(Boolean(0))
+        console.log(Boolean(""))
+        console.log(Boolean(null))
+        console.log(Boolean(undefined))
+        console.log(4 + '8') //暗黙的な型変換
+        console.log(8 - '7')
+        console.log(false + true)
+        console.log(1*true)
+
+        
+    </script>
+    <script>
+        const TAX_RATE = 1.1;
+        let productPrice1 = 1000;
+        let totalPrice = TAX_RATE * productPrice1;
+        console.log(`商品の全額は${productPrice1}円ですので、税込み金額は${totalPrice}円です`)
+
+        console.log(12**2 % 5)
+        console.log(12n**2n % 5n)
+        console.log(Number('文字列です'));
+    </script>
+
+    <script>
+        const counter = {num : 1};
+        counter.num = counter.num + 1;
+        console.log(counter['num']);
+        counter['num'] += 1;
+        console.log(counter['num'])
+    </script>
+    <script>
+        a = b = 4;
+        console.log(a);
+        let a1 = 0;
+        let b1 = ++a;
+        console.log('a1', a1, 'b1',b1)
+    </script>
+    <script>
+        const obja = {};
+        const objb = {};
+        console.log(obja === objb);
+    </script>
+    <script>
+        console.log((9 > 3)*3)
+
+        let a0 = 0;
+        // let b0;
+        let c0 = b0 = 9;
+        console.log(a0,b0,c0)
+    </script>
+
+    <script>
+        let val = null;
+        val = val ?? '初期値';
+        console.log(`val [${val}]`)
+
+        let num = 0;
+        num = num ?? 10;
+        console.log(`num [${num}]`)
+
+        const val2 = undefined?.prop;
+        console.log(val2);
+    </script>
+
+    <script>
+        //オプショナルチェイニング
+        const person2 ={
+            name: '麻生　小太郎',
+            age:40,
+            family:{
+                son:'Hibiki',
+                douhter:'Tinatu'
+            },
+        };
+
+        console.log(person2.siblings)
+        console.log(person2.siblings?.length);
+        console.log(person2.siblings?.length)
+        console.log(person2.abn)
+    </script>
+    <script>
+        let aa ;
+        console.log(aa)
+        console.log(aa = 10)
+        console.log(aa)
+        console.log((0 || undefined ) && "こんにちわ")
+        console.log(!(0 || undefined) && "こんにちわ")
+        console.log(null ? 'りんご' :' バナナ')
+        console.log(null ?? 'パイナップル')
+        console.log({apple:'りんご'}.fruit?.price ?? 'バナナ')
+    </script>
+  </body>
+</html>

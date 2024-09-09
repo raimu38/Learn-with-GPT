@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let score = 90;
+      let gokaku;
+
+      if (score > 60) {
+        gokaku = "合格";
+      } else {
+        gokaku = "不合格";
+      }
+      console.log(gokaku);
+
+      gokaku = score > 60 ? "合格" : "不合格";
+      console.log(gokaku);
+    </script>
+
+    <script>
+      //else if 抽象度を上げる　下げる
+
+      const fruit = -0;
+
+      if (fruit === "ばなな") {
+        console.log("バナナが見つかりました");
+      } else if (fruit === "りんご") {
+        console.log("りんごが見つかりました");
+      } else if (fruit) {
+        console.log("フルーツが見つかりました");
+      } else {
+        console.log("フルーツが見つかりませんでした");
+      }
+    </script>
+
+    <script>
+      const person = {
+        name: "Bob",
+        age: 20,
+        gender: "male",
+      };
+
+      if (person.gender === "male" && person.age >= 25) {
+        console.log(`${person.name}は25歳以上の男性です`);
+      } else {
+        console.log(`${person.name}は25歳以上の男性ではありません`);
+      }
+    </script>
+    <script>
+      let val = null;
+      if (!val) {
+        val = "Hello";
+      }
+      console.log(val);
+    </script>
+
+    <script>
+      //switch case
+      const whichCase = "case1";
+      switch (whichCase) {
+        case "case1":
+          console.log("Case1");
+        //   break;
+        case "case2":
+          console.log("Case2");
+          break;
+        default:
+          console.log("Default");
+      }
+    </script>
+
+    <script>
+      const animal = "ぞう";
+      switch (animal) {
+        case "ぞう":
+          console.log("ぞう");
+        case "うま":
+          console.log("うま");
+        case "うさぎ":
+          console.log("うさぎ");
+          break;
+        default:
+          console.log("なにかわかりません");
+      }
+    </script>
+
+    <script>
+      //例外処理
+      try {
+        nonExistingFunction();
+        console.log("例外処理発生");
+      } catch (errorkun) {
+        console.error("エラータイプ" + errorkun.name);
+        console.error("エラータイプ" + errorkun.message);
+        console.error("エラースタック" + errorkun.stack);
+        console.error("エラーコード" + errorkun.code);
+        console.warn("これは警告メッセージやで");
+        console.info("これは情報メッセージやで");
+        console.debug("デバッグメッセージ");
+      } finally {
+        console.log("必ず実行されます");
+        const data = [
+          { name: "John", age: 30 },
+          { name: "Jane", age: 25 },
+        ];
+        console.table(data);
+      }
+    </script>
+    <script>
+      try {
+        let b = 10 + a;
+        console.log(b);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        console.log("皇族の処理");
+      }
+    </script>
+
+    <script>
+      try {
+        throw new Error("numは数値型ではありません");
+      } catch (e) {
+        console.log(e);
+      }
+    </script>
+
+    <script>
+      try {
+        const num = 1;
+        num.toUpperCase();
+
+        let val1 = val2 + 1;
+      } catch (error) {
+        if (error instanceof TypeError) {
+          console.log(error.message);
+        } else if (error instanceof ReferenceError) {
+          console.log(error.message);
+        }
+      }
+    </script>
+
+    <script>
+      let i = 0;
+
+      while (i <= 6) {
+        console.log(i);
+        i += 2;
+      }
+
+      for (;;) {
+        const rand = Math.random();
+        console.log(rand);
+        if (rand > 0.1) {
+          break;
+        }
+      }
+      for (let i = 0; i <= 9; i++) {
+        if (i % 3 === 0) {
+          console.log(i);
+        }
+      }
+    </script>
+
+    <script>
+      //配列
+      const numArray = [2, 46, 7, 3, 7, 3, 6, 3, 6, 2];
+      console.log(numArray[5]);
+      console.log(numArray.length);
+    </script>
+
+    <script>
+      const numArray1 = [10, 20, 30];
+
+      for (let i = 0; i < numArray1.length; i++) {
+        numArray1[i] += 10;
+      }
+
+      console.log(numArray1);
+    </script>
+
+    <script>
+      const arry = [10, 20, 23, 47];
+      let sum = 0;
+      for (let i = 0; i < arry.length; i++) {
+        sum += arry[i];
+      }
+      console.log(`合計は${sum}です`);
+    </script>
+
+    <script>
+      const fruits = { apple: "りんご", banana: "バナナ", orange: "オレンジ" };
+      for (const key in fruits) {
+        console.log(`キー[${key}] 値:[${fruits[key]}]`); //配列を使用すうる場合はブラ-ケット記法で記述
+      }
+    </script>
+
+    <script>
+      const onj = {
+        p1: 10,
+        p2: 20,
+        skip: 20,
+        p3: 23,
+        p4: 47,
+      };
+      let sum2 = 0;
+      for (const key in onj) {
+        if (key !== "skip") {
+          sum2 += onj[key];
+        }
+      }
+      console.log(sum);
+    </script>
+    <script>
+      const fruits1 = ["りんご", "バナナ", "オレンジ"];
+      for (const value of fruits1) {
+        console.log(value);
+      }
+    </script>
+
+    <script>
+      const map = new Map();
+      map.set("apple", "りんご");
+      map.set("banana", "バナナ");
+
+      for (const row of map) {
+        console.log(row[0], row[1]);
+      }
+
+      for (const [key, value] of map) {
+        console.log(key, value);
+      }
+    </script>
+    <script>
+      const fruits2 = { apple: "りんご", banana: "バナナ" };
+      const props = Object.keys(fruits2);
+      console.log(props);
+
+      for (const prop of props) {
+        console.log(prop, fruits[prop]);
+      }
+
+      const values = Object.values(fruits);
+      console.log(values);
+      for (const value of values) {
+        console.log(value);
+      }
+
+      const entries = Object.entries(fruits2);
+
+      console.log(entries);
+      for (const entry of entries) {
+        console.log(entry[0], entry[1]);
+      }
+    </script>
+
+    <script>
+      const obj = {
+        p1: 10,
+        p2: "文字",
+        p3: 20,
+        skip: 20,
+        p4: true,
+        p5: 23,
+        p6: 47,
+      };
+      let sum1 = 0;
+
+      const pro = Object.keys(obj);
+      console.log(pro);
+      for (const p of pro) {
+        if (p !== "skip" && typeof obj[p] === "number") {
+          sum1 += obj[p];
+        }
+      }
+      console.log(sum1);
+    </script>
+
+    <script>
+      const breakTest = ["aa", "bb", "not break", "break", "dd"];
+      let it = 0;
+      while (true) {
+        if (breakTest[it] !== "break") {
+          console.log(breakTest[it]);
+          it++;
+        } else {
+          break;
+        }
+      }
+    </script>
+
+    <script>
+      let i1 = 0;
+      while (i1 < 5) {
+        if (i1 === 2) {
+          i1++;
+          continue;
+        }
+        console.log(`${i1 + 1}回目のループです`);
+        i1++;
+      }
+    </script>
+  </body>
+</html>
