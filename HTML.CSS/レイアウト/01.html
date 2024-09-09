@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        display: flex;
+        height: 100vh;
+      }
+      .bar1 {
+        height: 50vh;
+        background-color: antiquewhite;
+        width: 200px;
+      }
+      .bar2 {
+        width: 60%;
+        background-color: aquamarine;
+        height: 50vh;
+      }
+
+      @media (max-width: 900px) {
+        .bar2 {
+          width: 50%;
+        }
+      }
+
+      .bar3 {
+        flex: 1;
+        background-color: blueviolet;
+        width: auto;
+        height: 50vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="container">
+        <div class="bar1">
+          <h3>Bar1</h3>
+        </div>
+        <div class="bar2">
+          <h1>Main</h1>
+        </div>
+        <div class="bar3">
+          <h3>Bar3</h3>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
