@@ -1,8 +1,16 @@
 模写コード2回目 2024/09/11 参考サイト
-https://maipyon.net/programming/wakaba_demo/ 覚えたこと
-命名は相手に伝わる名前で記述する 例：ボタンのクラス名 b1 → purchase-button
+https://maipyon.net/programming/wakaba_demo/ 
+覚えたこと
+命名は相手に伝わる名前で記述する 
+例：ボタンのクラス名 b1 → purchase-button
 テキストを真ん中に text-align:center aタグの下線を消したい
-text-decoratioin:none; レスポンシブル対応 @media でブラウザAPIから情報を取得
-@media(max-width: 1000px){ //1000px以下の時のレイアウト } 知りたいこと
-・デモサイトからフォントを知りたい ・画像の比率調整 ・em rem の違い ・命名規則
+text-decoratioin:none; 
+レスポンシブル対応 @media でブラウザAPIから情報を取得
+@media(max-width: 1000px){ //1000px以下の時のレイアウト } 
+
+知りたいこと
+・デモサイトからフォントを知りたい 
+・画像の比率調整 
+・em rem の違い 
+・命名規則
 ・フッターの @みたいなcの書き方
