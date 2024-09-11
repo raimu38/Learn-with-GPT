@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: rgb(76, 175, 80);
+  margin: 0;
+  padding: 0;
+  color: white;
+  height: 70px;
+}
+
+.header {
+  display: flex;
+  direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  margin-left: 100px;
+  font-size: 25px;
+}
+.header ul {
+  display: flex;
+  direction: row;
+  margin: 20px;
+  list-style: none;
+}
+
+.header li {
+  list-style: none;
+  font-size: 16px;
+}
+
+.header ul a {
+  margin: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+.main-image-container img {
+  width: 100%;
+}
+.theme01 {
+  text-align: center;
+  margin: 20px;
+}
+
+.theme01 h2 {
+  font-family: HGPMinchoB;
+}
+.theme01 h1 {
+  font-family: HGPMinchoB;
+  color: rgb(76, 175, 80);
+  font-size: 30px;
+}
+
+.yasai {
+  display: flex;
+  flex-direction: row;
+  margin: 50px;
+}
+
+@media (max-width: 960px) {
+  .yasai {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.direction {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  padding-top: 0;
+}
+
+.direction h3 {
+  font-size: 25px;
+}
+
+.direction p {
+  font-size: 18px;
+}
+
+.buy {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  align-items: center;
+  text-align: center;
+}
+
+/* ボタンホバーいらない */
+.purchase-button {
+  margin: 30px;
+  width: 300px;
+  height: 60px;
+  color: white;
+  background-color: orange;
+  border-radius: 15px;
+  border-color: white;
+  font-size: 25px;
+}
+.detail-button {
+  margin: 30px;
+  width: 300px;
+  height: 60px;
+  color: white;
+  background-color: rgb(76, 175, 80);
+  border-radius: 15px;
+  border-color: white;
+  font-size: 25px;
+}
+
+footer {
+  background-color: rgb(76, 175, 80);
+  margin: 0;
+  height: 100px;
+  color: white;
+  text-align: center;
+}
+
+footer p {
+  font-size: 15px;
+}
