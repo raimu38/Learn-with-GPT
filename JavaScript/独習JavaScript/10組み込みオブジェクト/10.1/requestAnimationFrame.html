@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+      id="myElement"
+      style="width: 100px; height: 100px; background-color: aqua"
+    ></div>
+    <!-- 閉じタグが追加されてる！ -->
+
+    <script>
+      // ページの内容が完全に読み込まれてから実行
+      document.addEventListener("DOMContentLoaded", function () {
+        const element = document.getElementById("myElement");
+        let position = 0;
+
+        function move() {
+          position += 5; // 1ピクセルずつ移動
+          element.style.transform = `translate(${
+            position + 100
+          }px ,${position}px)`; // 要素を動かす
+
+          if (position < 1820) {
+            requestAnimationFrame(move); // 次のフレームで再びmove関数を呼び出す
+          }
+        }
+
+        // アニメーション開始
+        requestAnimationFrame(move);
+      });
+    </script>
+  </body>
+</html>
