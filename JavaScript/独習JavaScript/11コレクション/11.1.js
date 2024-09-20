@@ -121,3 +121,17 @@ newchuka = chuka.slice(1, 4);
 console.log(newchuka);
 console.log(newchuka.reverse());
 console.log(newchuka.includes("八宝菜"));
+
+const arry6 = [1, 2, 3, 4, 5];
+arry6.forEach(function (value, index, arry) {
+  console.log(value * 5);
+});
+
+const arry7 = [1, 2, 3, 4, 5];
+const newarry7 = arry7.map(function (value) {
+  return value * 3;
+});
+console.log(newarry7);
+
+const allowaary7 = arry7.map((value) => value * 4);
+console.log(allowaary7);
