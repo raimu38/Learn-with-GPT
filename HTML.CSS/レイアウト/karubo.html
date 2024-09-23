@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: antiquewhite;
+        display: flex;
+        justify-content: center; /* 水平方向に中央揃え */
+        align-items: center; /* 垂直方向に中央揃え */
+        height: 100vh; /* ビューポート全体の高さを使用 */
+        flex-direction: column; /* 要素を縦に並べる */
+      }
+      h1 {
+        width: 300px;
+        text-align: center;
+        background-color: beige;
+        border-radius: 20px;
+        color: brown;
+        padding: 10px;
+      }
+      input {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: bisque;
+        border-radius: 10px;
+        border-color: bisque;
+      }
+      /* 初期状態 */
+      #result {
+        opacity: 0;
+        transform: scale(0.8); /* 少し小さめに表示 */
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      /* 表示されるときの状態 */
+      #result.show {
+        opacity: 1;
+        transform: scale(1); /* 元の大きさに戻す */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>好きなパスタは?</h1>
+    <input type="text" id="pasta" value="" placeholder="好きなパスタを入力" />
+    <h2 id="result"></h2>
+    <script>
+      const pasta = document.getElementById("pasta");
+      const result = document.getElementById("result");
+
+      // イベントリスナーを正しく追加
+      pasta.addEventListener("change", function () {
+        // 入力値を取得
+        const pastaValue = pasta.value;
+
+        // 初期状態をリセット
+        result.classList.remove("show");
+
+        // 100msの遅延後に結果を更新し、ふわっと表示
+
+        switch (pastaValue) {
+          case "カルボナーラ": {
+            result.innerText = "カルボナーラ美味しいよね";
+            break;
+          }
+          case "ペペロンチーノ": {
+            result.innerHTML = `ペペロンチーノはシンプルだよね<p>うすすぎた吐きそうだった　でも頑張って食べた</p>`;
+            break;
+          }
+          default: {
+            result.innerText = `${pastaValue}も美味しいよね`;
+          }
+        }
+        // テキストが更新された後にクラスを追加してふわっと表示
+        result.classList.add("show");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+this　キーワード
+
+bindでthisを高速
+
+const newFn = fn.bind(obj, [parm2 , parm2 ...])
+newFn : 新しい関数
+fn: 拘束したい関数
+obj:参照したいオブジェクト
+parm1,parm2: 関数の引数
