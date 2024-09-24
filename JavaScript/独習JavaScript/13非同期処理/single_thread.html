@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>ボタン</button>
+    <script>
+      function sleep(ms) {
+        const startTime = new Date();
+
+        while (new Date() - startTime < ms);
+
+        alert("sleep関数が完了しました");
+      }
+      sleep(4000);
+
+      const button = document.querySelector("button");
+      function clickHandler() {
+        alert("ボタンが押されました");
+      }
+
+      button.addEventListener("click", clickHandler);
+    </script>
+  </body>
+</html>
