@@ -1,0 +1,49 @@
+services:  # Dockerコンテナで実行するサービスの定義開始
+  php-apache:  # PHPとApacheのサービス名を定義（任意の名前でOK）
+    build:  # Dockerイメージをビルドするための設定
+      context: .  # Dockerfileを含むプロジェクトのルートディレクトリを指定
+      dockerfile: Dockerfile  # Dockerfileの場所を指定して、そこからPHPとApacheの設定を行う
+    container_name: PHP-Learn  # PHP用のDockerコンテナの名前を指定
+    ports:  # ポートマッピングの設定
+      - "8080:80"  # ホストの8080ポートをコンテナ内の80番ポートにマッピング。ブラウザで `localhost:8080` でアクセス可能にする
+    volumes:  # ホストのファイルシステムをコンテナ内にマウントする設定
+      - ./src:/var/www/html  # ホストのsrcディレクトリをコンテナ内のApacheのドキュメントルート（/var/www/html）にマウント
+    networks:  # コンテナが接続するネットワークを指定
+      - app-network  # 下で定義する`app-network`に接続。PHPとMySQLが同じネットワークに所属する
+    depends_on:  # 依存関係の設定。MySQLコンテナ（`db`）がPHPコンテナよりも先に起動するようにする
+      - db  # MySQLが必要であるため、まずMySQLが起動するよう指定
+
+  db:  # MySQLのサービス定義開始
+    image: mysql:8.0  # MySQLの公式Dockerイメージ（バージョン8.0）を使用
+    container_name: MYSQL-Learn  # MySQL用のコンテナの名前を指定
+    environment:  # 環境変数の設定（MySQLの初期設定）
+      MYSQL_ROOT_PASSWORD: raimusql  # MySQLのルートユーザー（管理者）のパスワードを設定
+      MYSQL_DATABASE: Mysql-Lean  # コンテナ起動時に自動で作成されるデータベース名
+      MYSQL_USER: raimu  # カスタムユーザーを作成する設定（MySQLのユーザー名）
+      MYSQL_PASSWORD: raimusql  # カスタムユーザーのパスワード設定
+    volumes:  # ボリュームをマウントして、データを永続化する設定
+      - db_data:/var/lib/mysql  # MySQLのデータを保存するディレクトリをホストにマウントし、データを永続化
+    networks:  # ネットワーク設定（PHPと同じネットワークを使用）
+      - app-network  # `app-network`に接続して、他のコンテナ（PHPなど）と通信可能にする
+    ports:  # ポートマッピングの設定
+      - "3306:3306"  # ホストの3306ポートをコンテナ内のMySQLの3306ポートにマッピング。ホストからMySQLに接続可能にする
+
+  phpmyadmin:  # phpMyAdminのサービス定義開始
+    image: phpmyadmin/phpmyadmin  # phpMyAdminの公式Dockerイメージを使用
+    container_name: phpmyadmin  # phpMyAdmin用のコンテナ名を指定
+    environment:  # 環境変数の設定（phpMyAdminの設定）
+      PMA_HOST: db  # phpMyAdminが接続するMySQLサーバーのホスト名。`db`はMySQLのサービス名
+      MYSQL_ROOT_PASSWORD: raimusql  # phpMyAdminでMySQLのルートユーザーにログインするためのパスワード
+    ports:  # ポートマッピングの設定
+      - "8081:80"  # ホストの8081ポートをコンテナ内の80番ポートにマッピング。ブラウザで `localhost:8081` でphpMyAdminにアクセス可能にする
+    depends_on:  # 依存関係の設定。MySQLコンテナ（`db`）がphpMyAdminコンテナよりも先に起動するように指定
+      - db  # phpMyAdminはMySQLに依存するため、MySQLが起動した後にphpMyAdminを起動する
+    networks:  # ネットワーク設定（PHPと同じネットワークを使用）
+      - app-network  # `app-network`に接続し、他のコンテナ（PHPやMySQL）と通信可能にする
+
+volumes:  # ボリュームの定義。データ永続化のために使用
+  db_data:  # MySQLのデータを永続化するためのボリューム名を定義（db_data）
+
+networks:  # ネットワークの定義
+  app-network:  # `app-network`というネットワークを定義し、サービス間で通信を可能にする
+    driver: bridge  # ブリッジネットワークを使用して、コンテナ間の通信を行う

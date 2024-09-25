@@ -1,0 +1,49 @@
+services:
+  php-apache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: PHP-Learn
+    ports:
+      - "8080:80" # ホストのポート8080をコンテナ内の80番ポートにマッピング
+    volumes:
+      - ./src:/var/www/html # ホストのsrcディレクトリをコンテナ内にマウント
+    networks:
+      - app-network
+    depends_on:
+      - db # MySQLがPHPよりも先に起動するように指定
+
+  db:
+    image: mysql:8.0
+    container_name: MYSQL-Learn
+    environment:
+      MYSQL_ROOT_PASSWORD: raimusql
+      MYSQL_DATABASE: Mysql-Lean
+      MYSQL_USER: raimu
+      MYSQL_PASSWORD: raimusql
+    volumes:
+      - db_data:/var/lib/mysql # データ永続化のためにボリュームをマウント
+    networks:
+      - app-network
+    ports:
+      - "3306:3306" # MySQLのデフォルトポートをホストに公開
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: raimusql # MySQLのルートユーザーのパスワード
+    ports:
+      - "8081:80" # phpMyAdminにアクセスするためのポート
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
