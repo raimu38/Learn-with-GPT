@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー管理システム</title>
+  </head>
+  <body>
+    <h1>ユーザー管理システム</h1>
+
+    <h2>新規ユーザー作成</h2>
+    <input type="text" id="userName" placeholder="名前" />
+    <button onclick="createUser()">作成</button>
+
+    <h2>ユーザー一覧</h2>
+    <button onclick="getUsers()">一覧取得</button>
+    <ul id="userList"></ul>
+
+    <script>
+      // 新規ユーザー作成
+      function createUser() {
+        const name = document.getElementById("userName").value;
+        fetch("/Rooting/index.php", {
+          method: "POST",
+          body: JSON.stringify({ id: 1, name: "Updated Name" }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            console.log("ユーザーが作成されました");
+          });
+      }
+
+      // ユーザー一覧取得
+      function getUsers() {
+        fetch("/Rooting/index.php?users", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text(); // .json() の代わりにテキストとして受け取る
+          })
+          .then((text) => {
+            if (text) {
+              // テキストが空でない場合のみJSONパース
+              const users = JSON.parse(text);
+              const userList = document.getElementById("userList");
+              userList.innerHTML = "";
+              Object.keys(users).forEach((id) => {
+                const li = document.createElement("li");
+                li.textContent = `${id}: ${users[id].name}`;
+                userList.appendChild(li);
+              });
+            } else {
+              console.log("No users found");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
