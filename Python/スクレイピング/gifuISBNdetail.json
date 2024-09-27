@@ -472,7 +472,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-8425-0083-6 C3061",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8425-0083-6 C3061"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8425-0083-6"
       },
       {
         "isbn": "978-4901311540",
@@ -701,7 +701,7 @@
     "isbn_data": [
       {
         "isbn": "9784875923870C3077",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=9784875923870C3077"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=9784875923870"
       },
       {
         "isbn": "978-4-06-513341-5",
@@ -718,7 +718,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-86099-374-0C3350",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86099-374-0C3350"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86099-374-0"
       },
       {
         "isbn": "978-4-7581-2090-6",
@@ -731,7 +731,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-8079-0691-8 C3043",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8079-0691-8 C3043"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8079-0691-8"
       }
     ]
   },
@@ -792,7 +792,7 @@
     "isbn_data": [
       {
         "isbn": "4-621-07133 C3343",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=4-621-07133 C3343"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=4-621-07133"
       },
       {
         "isbn": "978-4-8079-1492-0",
@@ -1731,11 +1731,11 @@
     "isbn_data": [
       {
         "isbn": "978-4-86371-533-2-C3037",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86371-533-2-C3037"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86371-533-2"
       },
       {
         "isbn": "921124-63-9C3037",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=921124-63-9C3037"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=921124-63-9"
       }
     ]
   },
@@ -2611,11 +2611,11 @@
       },
       {
         "isbn": "4-7786-0066-5 C1873",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=4-7786-0066-5 C1873"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=4-7786-0066-5"
       },
       {
         "isbn": "4-7786-0065-7 C1873",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=4-7786-0065-7 C1873"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=4-7786-0065-7"
       },
       {
         "isbn": "4898155367",
@@ -2943,7 +2943,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-7699-1293-4 C3045",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-7699-1293-4 C3045"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-7699-1293-4"
       }
     ]
   },
@@ -4548,15 +4548,15 @@
       },
       {
         "isbn": "884122658C3047",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=884122658C3047"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=884122658"
       },
       {
         "isbn": "884122666C3047",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=884122666C3047"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=884122666"
       },
       {
         "isbn": "88412264XC3047",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=88412264XC3047"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=88412264X"
       }
     ]
   },
@@ -5799,7 +5799,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-384-33461-6 C1082",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-384-33461-6 C1082"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-384-33461-6"
       }
     ]
   },
@@ -5826,7 +5826,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-384-33461-6 C1082",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-384-33461-6 C1082"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-384-33461-6"
       }
     ]
   },
@@ -10819,7 +10819,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-254-46039-1 C3061",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-254-46039-1 C3061"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-254-46039-1"
       }
     ]
   },
@@ -13560,7 +13560,7 @@
       },
       {
         "isbn": "978-4-88980-141-5 C3061",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-88980-141-5 C3061"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-88980-141-5"
       },
       {
         "isbn": "9784889801651",
@@ -14203,7 +14203,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-8079-0691-8 C3043",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8079-0691-8 C3043"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8079-0691-8"
       }
     ]
   },
@@ -15076,7 +15076,7 @@
       },
       {
         "isbn": "978-4-86371-180-8 C303",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86371-180-8 C303"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86371-180-8"
       },
       {
         "isbn": "978-4-86371-333-8",
@@ -21081,7 +21081,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-621-08112-9 C3343",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-621-08112-9 C3343"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-621-08112-9"
       }
     ]
   },
@@ -21475,7 +21475,7 @@
       },
       {
         "isbn": "978-4-254-25588-1 C3358",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-254-25588-1 C3358"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-254-25588-1"
       }
     ]
   },
@@ -23329,7 +23329,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-254-46039-1 C3061",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-254-46039-1 C3061"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-254-46039-1"
       }
     ]
   },
@@ -23371,7 +23371,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-8300-3288-2 C3061",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8300-3288-2 C3061"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-8300-3288-2"
       },
       {
         "isbn": "978-4830032745",
@@ -23402,7 +23402,7 @@
     "isbn_data": [
       {
         "isbn": "978-4-86671-191-1C3047",
-        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86671-191-1C3047"
+        "isbn_url": "https://opac.lib.gifu-u.ac.jp/opc/xc/search/*?os[isbn]=978-4-86671-191-1"
       }
     ]
   },
