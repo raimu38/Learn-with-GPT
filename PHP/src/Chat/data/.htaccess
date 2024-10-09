@@ -1,0 +1,4 @@
+<FilesMatch "\.(json|gz)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
