@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"CalculatorTest::testAdd":0.001}}
+{"version":1,"defects":{"ShoppingCartTest::testAddProdoctToCart":8,"ShoppingCartTest::testCountTotalPrice":7,"ShoppingCartTest::testAddProductToCart":7,"ShoppingCartTest::testShowProduct":8},"times":{"CalculatorTest::testAdd":0.001,"ShoppingCartTest::testAddProdoctToCart":0.002,"ShoppingCartTest::testCountTotalPrice":0,"ShoppingCartTest::testAddProductToCart":0.001,"ShoppingCartTest::testShowProduct":0}}
