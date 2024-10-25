@@ -1,5 +1,39 @@
-Line 1: This is the first line.
-Line 2: Here's the second line.
-Line 3: And this is the third line.
-Line 4: Don't forget the fourth line!
-Line 5: Finally, the last line.
+お疲れさま！今日学んだことを端的にまとめたノートとして整理するで。今度見返すときに役立ててな。
+
+1. array_unique() と array_reverse():
+
+	•	array_unique(): 配列内の重複を削除する。
+	•	array_reverse(): 配列を逆順に並べ替える。
+
+2. DateTime クラス:
+
+	•	modify(): 日付を加算・減算する。例：modify('+3 days') や modify('-1 month')。
+	•	format(): 日付を指定の形式で表示。例：format('Y-m-d H:i:s')。
+
+3. array_reduce() と array_map():
+
+	•	array_reduce(): 配列のすべての要素に対して累積処理を行う（例：全要素の積を計算）。
+	•	array_map(): 配列の各要素に関数を適用して新しい配列を作成。
+
+4. 文字列操作と正規表現:
+
+	•	preg_match_all(): 正規表現にマッチするすべての部分を配列に抽出。例：メールアドレスや金額の抽出。
+	•	preg_replace(): 正規表現に基づいて置換を行う。例：メールアドレスを [hidden email] に置き換える。
+
+5. 配列操作（array_filter(), array_walk()）:
+
+	•	array_filter(): 条件に合う要素だけを抽出する。例：年齢が25歳以上の学生を抽出。
+	•	array_walk(): 配列の各要素に対して処理を実行し、直接値を変更する（参照渡しを使用）。
+
+6. ファイル操作:
+
+	•	file_get_contents(): ファイル全体を文字列として読み込む。
+	•	file(): ファイルを1行ずつ配列に読み込む。
+	•	file_put_contents(): ファイルにデータを書き込む。
+
+7. 正規表現のキャプチャグループ:
+
+	•	() で囲んだ部分はキャプチャグループとして抽出され、置換時に $1, $2, $3 のように使用できる。
+	•	例：日付 2024-10-15 を 15/10/2024 に変換する。
+
+これで次回見返すときに、今日学んだポイントをすぐに確認できるはずやで！またいつでも質問や挑戦したい問題があれば、遠慮なく聞いてや！
