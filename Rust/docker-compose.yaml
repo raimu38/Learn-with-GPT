@@ -1,9 +1,36 @@
+
+
+
 services:
-  rust:
-    image: rust:latest
-    container_name: rust-container
-    working_dir: /usr/src/app
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb-container
+ 
+    ports:
+      - "27017:27017"
     volumes:
-      - ./src:/usr/src/app
-    command: bash
-    tty: true
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - rust_mongo_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-client:
+    image: mongo:6.0  # MongoDBのクライアントを含むイメージ
+    container_name: mongo-client
+    command: sleep infinity  # 必要時にアクセスできるように常に維持
+    networks:
+      - rust_mongo_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  rust_mongo_network:
+    driver: bridge
