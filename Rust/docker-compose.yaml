@@ -1,0 +1,9 @@
+services:
+  rust:
+    image: rust:latest
+    container_name: rust-container
+    working_dir: /usr/src/app
+    volumes:
+      - ./src:/usr/src/app
+    command: bash
+    tty: true
