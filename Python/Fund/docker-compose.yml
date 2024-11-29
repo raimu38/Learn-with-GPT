@@ -1,0 +1,10 @@
+services:
+  python-env:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-env
+    volumes:
+      - ./src:/app/src # srcフォルダをコンテナ内の/app/srcにマウント
+    stdin_open: true # インタラクティブな環境を有効にする
+    tty: true # ターミナルを有効にする
