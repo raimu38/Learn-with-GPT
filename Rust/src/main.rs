@@ -1,4 +1,4 @@
 fn main() {
-    println!("Hello from Docker and Rust!");
+    println!("Hello from Docker and Rusta!");
     println!("I went to Internship")
 }
