@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+print(ABC.path)
 
 #Strategy
 class PaymentStrategy(ABC):
