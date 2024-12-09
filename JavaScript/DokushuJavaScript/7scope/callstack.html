@@ -1,0 +1,32 @@
+<script>
+  function first() {
+    let firstVal = "firstコンテキスト";
+    second();
+  }
+  function second() {
+    third();
+    let secondVal = "secondコンテキスト";
+    debugger;
+  }
+
+  function third() {
+    let thirdVal = "thirdコンテキスト";
+    debugger;
+  }
+
+  first();
+
+  const taro = {
+    name: "太郎",
+    hello: function () {
+      debugger; // ここで this を確認
+      console.log("this:", this); // thisがtaroを指している
+      console.log("こんにちは" + this.name);
+    },
+  };
+
+  taro.hello();
+
+  // taroを直接確認
+  console.log("taro:", taro);
+</script>
