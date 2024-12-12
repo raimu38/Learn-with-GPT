@@ -19,7 +19,7 @@ class Dog : public Animal {
 };
 
 int main(){
-    Animal a("Generic Animal");
+    Animal a("Generic Animals");
     Dog b("Buddy");
     a.speak();
     b.speak();
