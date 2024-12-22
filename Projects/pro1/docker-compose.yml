@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - mynetwork
+    volumes:
+      # 必要に応じて Nginx がコンテナ内でフロントの静的ファイルを参照する場合の設定など
+      - ./frontend/out:/usr/share/nginx/html:ro
+
+  backend:
+    build: ./backend
+    container_name: backend_app
+    depends_on:
+      - redis
+    networks:
+      - mynetwork
+    volumes:
+      - ./backend/media:/app/media # ホストの media フォルダをコンテナとマウント
+
+  redis:
+    build: ./redis
+    container_name: redis_db
+    networks:
+      - mynetwork
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_app
+    networks:
+      - mynetwork
+    # Next.js の out フォルダを Nginx などで参照したい場合は volume マウントすることも可
+
+networks:
+  mynetwork:
+    driver: bridge
