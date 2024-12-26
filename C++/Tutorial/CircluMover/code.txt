@@ -1,0 +1,371 @@
+#ifndef BALL_HPP
+#define BALL_HPP
+
+#include <SDL2/SDL.h> // SDL2 のメインヘッダをインクルード（描画に必要）
+#include <string>
+
+/**
+ * @brief 画面上に表示する「ボール」を表すクラス
+ *
+ * このクラスはボールの位置・半径・色といった情報を持ち、
+ * SDL_Renderer を用いて描画するメソッドを提供します。
+ *
+ * ボールの描画は「ピクセルを1つずつ塗りつぶす」方法で実装。
+ * 小規模アプリならこれでも十分ですが、大きな円をたくさん描画するなら
+ * もっと効率の良い方法を検討する必要があります。
+ */
+class Ball {
+public:
+    /**
+     * @brief コンストラクタ
+     * @param x ボールの中心 x 座標
+     * @param y ボールの中心 y 座標
+     * @param radius ボールの半径
+     * @param color ボールの色 (SDL_Color 型)
+     */
+    Ball(int x, int y, int radius, SDL_Color color);
+
+    /**
+     * @brief ボールを描画する
+     * @param renderer SDL_Renderer* 描画先のレンダラー
+     */
+    void draw(SDL_Renderer* renderer) const;
+
+    /**
+     * @brief ボールの中心座標を設定
+     */
+    void setPosition(int x, int y);
+    /** 
+    *@brief ボールを移動させる
+    *@param dx x 方向の移動量
+    *@param dy y 方向の移動量
+    **/
+
+    void move(int dx, int dy);
+
+    /**
+     * @brief ボールの中心座標を取得（x 座標）
+     */
+    int getX() const;
+
+    /**
+     * @brief ボールの中心座標を取得（y 座標）
+     */
+    int getY() const;
+
+    /**
+     * @brief ボールの半径を取得
+     */
+    int getRadius() const;
+
+private:
+    int m_x;         // ボールの中心 x 座標
+    int m_y;         // ボールの中心 y 座標
+    int m_radius;    // ボールの半径
+    SDL_Color m_color; // SDL2 で色を表す構造体 (r, g, b, a)
+};
+
+#endif#ifndef WINDOW_HPP
+#define WINDOW_HPP
+
+// #include <SDL2/SDL.h>
+
+#include <string>
+#include "Ball.hpp"
+#include <unordered_map>
+
+/**
+ * @brief SDL2 を使ってウィンドウを管理するクラス
+ *
+ * このクラスはウィンドウの生成から、イベントループ（マウス入力など）の処理、
+ * 描画を行うところまで一連を司ります。
+ * main関数から呼び出して使います。
+ */
+class Window {
+public:
+    /**
+     * @brief コンストラクタ
+     * @param title ウィンドウのタイトル
+     * @param width ウィンドウの幅
+     * @param height ウィンドウの高さ
+     */
+    Window(const std::string& title, int width, int height);
+
+    /**
+     * @brief デストラクタ
+     * SDL2のリソース破棄を行う
+     */
+    ~Window();
+
+    /**
+     * @brief メインループを開始する
+     *
+     * このメソッドを呼び出すと、ウィンドウが開き、
+     * ユーザが閉じるまでループを続けます。
+     */
+    void run();
+
+private:
+    /**
+     * @brief ウィンドウ・レンダラーを初期化
+     * @return 成功なら true, 失敗なら false
+     */
+    bool init();
+
+    /**
+     * @brief イベントを処理する (例: マウス位置を取得など)
+     */
+    void processEvents();
+
+    /**
+     * @brief 描画を行う
+     */
+    void render();
+
+    /**
+     * @brief ウィンドウやレンダラーなどのクリーンアップ
+     */
+    void cleanUp();
+
+private:
+    std::unordered_map<SDL_Keycode, bool> m_keyState; // キー状態を管理するマップ
+    std::string m_title;   // ウィンドウタイトル
+    int m_width;           // 幅
+    int m_height;          // 高さ
+    bool m_isRunning;      // メインループが動いているかどうか
+
+    SDL_Window* m_window;        // SDL ウィンドウ
+    SDL_Renderer* m_renderer;    // SDL レンダラー
+
+    Ball m_ball; // 画面上に表示するボール（1つだけ表示）
+    int m_moveSpeed;
+};
+
+#endif#include "Window.hpp"
+#include <iostream> // std::cerr など
+
+Window::Window(const std::string& title, int width, int height)
+    : m_title(title),
+      m_width(width),
+      m_height(height),
+      m_isRunning(false),
+      m_window(nullptr),
+      m_renderer(nullptr),
+      // ボールの初期値: ウィンドウ中心に配置し、半径30, 色は緑 (RGBA=0,255,0,255)
+      m_ball(width / 2, height / 2, 30, SDL_Color{0, 255, 0, 255}),
+      m_moveSpeed(5)
+{
+}
+
+Window::~Window()
+{
+    // デストラクタ内でリソースをクリーンアップ
+    cleanUp();
+}
+
+bool Window::init()
+{
+    // SDL_Init でSDLを初期化する
+    // SDL_INIT_VIDEO は「ビデオサブシステムを使う」指定
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::cerr << "SDL could not initialize! SDL_Error: "
+                  << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    // SDL_CreateWindow でウィンドウを作成
+    m_window = SDL_CreateWindow(
+        m_title.c_str(),                // ウィンドウタイトル (string -> const char*)
+        SDL_WINDOWPOS_CENTERED,         // ウィンドウを画面の中央に配置 (X座標)
+        SDL_WINDOWPOS_CENTERED,         // ウィンドウを画面の中央に配置 (Y座標)
+        m_width,                        // 幅
+        m_height,                       // 高さ
+        SDL_WINDOW_SHOWN                // ウィンドウをすぐに表示する
+    );
+
+    if (m_window == nullptr) {
+        std::cerr << "Window could not be created! SDL_Error: "
+                  << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    // SDL_CreateRenderer でレンダラーを作成
+    m_renderer = SDL_CreateRenderer(
+        m_window,      // 描画先のウィンドウ
+        -1,            // ドライバの選択 (通常-1でOK)
+        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+    );
+    if (m_renderer == nullptr) {
+        std::cerr << "Renderer could not be created! SDL_Error: "
+                  << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    // ここまで来れたら初期化成功
+    return true;
+}
+
+void Window::cleanUp()
+{
+    // レンダラーの破棄
+    if (m_renderer) {
+        SDL_DestroyRenderer(m_renderer);
+        m_renderer = nullptr;
+    }
+
+    // ウィンドウの破棄
+    if (m_window) {
+        SDL_DestroyWindow(m_window);
+        m_window = nullptr;
+    }
+
+    // SDL を終了 (最後に呼ぶ)
+    SDL_Quit();
+}
+
+void Window::run()
+{
+    // 初期化に成功したらフラグを立てる
+    if (init()) {
+        m_isRunning = true;
+    } else {
+        // 初期化に失敗したら走らせない
+        m_isRunning = false;
+        return;
+    }
+
+    // メインループ
+    while (m_isRunning) {
+        processEvents();
+        render();
+        // 必要なら update() メソッドなどでロジック更新を入れてもOK
+    }
+}
+
+void Window::processEvents()
+{
+    // SDL_Event は SFML の sf::Event のように「イベント情報」を表す構造体
+    SDL_Event e;
+
+    std::unordered_map<SDL_Keycode, bool> keyState;
+
+    // SDL_PollEvent(&e) はイベントがある間ループする
+    while (SDL_PollEvent(&e)) {
+        if (e.type == SDL_QUIT) {
+            // ウィンドウの「×」が押されたなどで終了
+            m_isRunning = false;
+        }
+        else if (e.type == SDL_MOUSEMOTION) {
+            // マウスが動いたイベント
+            // e.motion.x, e.motion.y にマウスカーソルの現在座標が入っている
+            m_ball.setPosition(e.motion.x, e.motion.y);
+        }
+    }
+
+    int dx = 0, dy = 0;
+    if (keyState[SDLK_LEFT])  dx -= m_moveSpeed;
+    if (keyState[SDLK_RIGHT]) dx += m_moveSpeed;
+    if (keyState[SDLK_UP])    dy -= m_moveSpeed;
+    if (keyState[SDLK_DOWN])  dy += m_moveSpeed;
+
+    m_ball.move(dx, dy);
+}
+
+void Window::render()
+{
+    // 描画色を「黒」に設定して画面をクリア
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 0, 255);
+    SDL_RenderClear(m_renderer);
+
+    // ボールを描画
+    m_ball.draw(m_renderer);
+    m_ball.draw(m_renderer);
+
+    // 描画内容を画面に反映
+    SDL_RenderPresent(m_renderer);
+}#include "Window.hpp"
+
+/**
+ * @brief エントリーポイント (main関数)
+ *
+ * ここから実行が始まります。
+ */
+int main(int argc, char* argv[])
+{
+    // ウィンドウタイトル、幅、高さを指定して Window を生成
+    Window window("Move the Ball with Mouse", 800, 600);
+
+    // メインループを実行（ウィンドウを開いて待機）
+    window.run();
+
+    // アプリ終了
+    return 0;
+}#include "Ball.hpp"
+#include <cmath> // 距離計算などに使う
+
+Ball::Ball(int x, int y, int radius, SDL_Color color)
+    : m_x(x), m_y(y), m_radius(radius), m_color(color)
+{
+    // コンストラクタでは単純にメンバ変数を初期化しているだけです。
+    // オブジェクト指向の考え方として、
+    // 「ボール」という概念に必要な情報(座標、色、半径)を
+    // インスタンス変数として保持するように設計しました。
+}
+
+void Ball::draw(SDL_Renderer* renderer) const
+{
+    // 描画色を設定
+    SDL_SetRenderDrawColor(renderer, m_color.r, m_color.g, m_color.b, m_color.a);
+
+    // シンプルな「塗りつぶし円」を描画する例として、下記のように
+    // ボールを囲む正方形を走査して、半径内にあるピクセルだけを描画
+    // (distance <= m_radius) の条件で実現しています。
+    //
+    // 本来はもっと効率的な円描画アルゴリズム(Bresenhamの円など)がありますが、
+    // わかりやすさ重視で「走査線＋距離計算」で実装。
+    //
+    // ※ 実行速度に厳しいアプリでは非推奨ですが、小さなサンプルならOKです。
+    for (int w = 0; w < 2 * m_radius; ++w) {
+        for (int h = 0; h < 2 * m_radius; ++h) {
+            // 円の左上を (m_x - m_radius, m_y - m_radius) とみなし、
+            // そこから (w, h) だけ進んだ点の座標を計算する
+            int px = m_x - m_radius + w;
+            int py = m_y - m_radius + h;
+
+            // ボール中心 (m_x, m_y) からの距離を計算し、
+            // 半径以下であれば「円の内側」とみなす
+            int dx = px - m_x;
+            int dy = py - m_y;
+            if ((dx * dx + dy * dy) <= (m_radius * m_radius)) {
+                SDL_RenderDrawPoint(renderer, px, py);
+            }
+        }
+    }
+}
+
+void Ball::setPosition(int x, int y)
+{
+    m_x = x;
+    m_y = y;
+}
+
+void Ball::move(int dx, int dy)
+{
+    m_x += dx;
+    m_y += dy;
+}
+
+int Ball::getX() const
+{
+    return m_x;
+}
+
+int Ball::getY() const
+{
+    return m_y;
+}
+
+int Ball::getRadius() const
+{
+    return m_radius;
+}
