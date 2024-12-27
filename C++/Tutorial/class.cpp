@@ -23,6 +23,7 @@ int main(){
     Dog b("Buddy");
     a.speak();
     b.speak();
+    a.speak();
 
     return 0;
 }

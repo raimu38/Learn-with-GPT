@@ -10,4 +10,6 @@ int main() {
     std::cout << "Value pointed to by ptr: " << *ptr << std::endl;
 
     return 0;
+
+    
 }
