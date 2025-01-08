@@ -9,6 +9,7 @@ int main() {
     std::cout << "Value stored in ptr (address of x): " << ptr << std::endl;
     std::cout << "Value pointed to by ptr: " << *ptr << std::endl;
 
+    
     return 0;
 
     
