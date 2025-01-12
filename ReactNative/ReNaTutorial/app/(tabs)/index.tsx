@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, FlatList, Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Button, FlatList, Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 type CatProps = {
@@ -109,11 +109,11 @@ const FlatListBasics = () => {
 };
 
 const Circle = () => {
-  const [radius, setRadius] = useState(0);
+  const [radius, setRadius] = useState(1.1);
   useEffect(() => {
     const interval = setInterval(() => {
-      setRadius((prev) => (prev < 300 ? prev + 1 : prev / 3));
-    }, 2);
+      setRadius((prev) => (prev < 30000 ? prev ** 1.05 : 1.1));
+    }, 40);
     return () => clearInterval(interval);
   }, []);
   return <View style={{ height: radius, width: radius, backgroundColor: "#79f", borderRadius: radius / 2 }} />;
@@ -127,13 +127,59 @@ const FixedDimensionBasics = () => {
     </View>
   );
 };
+
+type Movie = {
+  id: string;
+  title: string;
+  releaseYear: string;
+};
+
+const MovieFetch = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<Movie[]>([]);
+
+  const getMovie = async () => {
+    try {
+      const response = await fetch("https://reactnative.dev/movies.json");
+      const json = await response.json();
+      setData(json.movies);
+      console.log(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    getMovie();
+  }, []);
+
+  return (
+    <View style={{ flex: 1, padding: 20 }}>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={({ id }) => id}
+          renderItem={({ item }) => (
+            <Text style={{ color: "black" }}>
+              {item.title}, {item.releaseYear}
+            </Text>
+          )}
+        />
+      )}
+    </View>
+  );
+};
+
 const Cafe = () => {
   return (
     <>
+      <MovieFetch />
       <Cat name="Kuro" />
       <Cat name="Siro" />
       <PizzaTranslator />
-
       <Scroll />
       <FlatListBasics />
       <FixedDimensionBasics />

@@ -222,3 +222,78 @@ nums = [10, 15, 20, 25, 30, 35, 40, 45, 50]
 # それらの数値を10で割った結果を含む新しいリストを作成してください。
 newnums = [num / 10 for num in nums if num >= 15 and num <= 45]
 print(newnums)
+
+
+result = []
+
+for x in range(9):
+    result.append(x)
+
+print(result)
+
+result = [x for x in range(10) if x % 2 == 0 or x % 3 == 0]
+print(result)
+
+squares = {}
+for x in range(10):
+    squares[x * 2] = x**2
+
+print(squares)
+
+squares = {x: x**3 for x in range(10) if x % 2 == 0}
+print(squares)
+
+words = ["banana","apple","cherry"]
+sorted_words = sorted(words)
+words.sort()
+words.remove("banana")
+words.append("peach")
+words.pop()
+
+print(sorted_words)
+print(words)
+
+text = "hellowordhehellollo"
+new_text = text.replace("hello","").replace("hello","greate")
+print(new_text)#非破壊的新しくおブジェクを返す
+
+from enum import Enum
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+    BLACK = 4
+    AISATU ="ohayou"
+
+color = Color.RED
+if color == Color.RED:
+    print(color.value)
+    print(Color.AISATU.value)
+
+class OrderStatus(Enum):
+    PENDING ="pending"
+    SHIPPED = "shipped"
+    DELIVERED = "delivers"
+    CANCELD   = "canceld"
+
+def check_order_status(status: OrderStatus):
+    if status == OrderStatus.SHIPPED:   
+        print("ご注文は配送済みです")
+
+check_order_status(OrderStatus.SHIPPED)
+
+class TaskStatus(Enum):
+    TODO = "ToDo"
+    IN_PROGRESS = "InProgress"
+    DONE = "Done"
+
+
+name: str = "Alice"
+age: int = 20
+bool1: bool = True
+
+def greet(name:str) -> None:
+    print(f"Hello {name}")
+
+greet(name)
+
