@@ -1,0 +1,13 @@
+query{
+ user(login: "bananaumai"){
+    name}
+}
+schema{
+    type Shop{
+        id: ID!
+        name: String!
+    }
+
+    type Query{
+        shops: [SHOP]!}
+}
