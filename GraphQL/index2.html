@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GraphQL CRUD 操作デモ</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      input,
+      button {
+        padding: 8px;
+        margin: 5px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GraphQL CRUD 操作デモ</h1>
+
+    <!-- 作成セクション -->
+    <div class="section" id="create-section">
+      <h2>アイテムを作成</h2>
+      <input type="text" id="create-name" placeholder="名前" />
+      <input type="text" id="create-description" placeholder="説明" />
+      <button onclick="createItem()">作成</button>
+    </div>
+
+    <!-- 読み取りセクション -->
+    <div class="section" id="read-section">
+      <h2>アイテム一覧</h2>
+      <button onclick="fetchItems()">全てのアイテムを取得</button>
+      <table id="items-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名前</th>
+            <th>説明</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- アイテムがここに表示されます -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 更新セクション -->
+    <div class="section" id="update-section">
+      <h2>アイテムを更新</h2>
+      <input type="text" id="update-id" placeholder="アイテムID" />
+      <input type="text" id="update-name" placeholder="新しい名前" />
+      <input type="text" id="update-description" placeholder="新しい説明" />
+      <button onclick="updateItem()">更新</button>
+    </div>
+
+    <!-- 削除セクション -->
+    <div class="section" id="delete-section">
+      <h2>アイテムを削除</h2>
+      <input type="text" id="delete-id" placeholder="アイテムID" />
+      <button onclick="deleteItem()">削除</button>
+    </div>
+
+    <script>
+      const GRAPHQL_ENDPOINT = "http://localhost:8000/graphql";
+
+      // アイテムを作成する関数
+      async function createItem() {
+        const name = document.getElementById("create-name").value;
+        const description = document.getElementById("create-description").value;
+
+        const query = `
+                mutation {
+                    createItem(name: "${name}", description: "${description}") {
+                        id
+                        name
+                        description
+                    }
+                }
+            `;
+
+        const response = await fetch(GRAPHQL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+
+        const result = await response.json();
+        console.log(result);
+        alert("アイテムを作成しました。");
+        fetchItems(); // 作成後に一覧を更新
+      }
+
+      // 全てのアイテムを取得する関数
+      async function fetchItems() {
+        const query = `
+                query {
+                    getItems {
+                        id
+                        name
+                        description
+                    }
+                }
+            `;
+
+        const response = await fetch(GRAPHQL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+
+        const result = await response.json();
+        console.log(result);
+        const items = result.data.getItems;
+        const tbody = document.querySelector("#items-table tbody");
+        tbody.innerHTML = ""; // 既存の行をクリア
+
+        items.forEach((item) => {
+          const tr = document.createElement("tr");
+
+          const tdId = document.createElement("td");
+          tdId.textContent = item.id;
+          tr.appendChild(tdId);
+
+          const tdName = document.createElement("td");
+          tdName.textContent = item.name;
+          tr.appendChild(tdName);
+
+          const tdDescription = document.createElement("td");
+          tdDescription.textContent = item.description || "";
+          tr.appendChild(tdDescription);
+
+          const tdActions = document.createElement("td");
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "削除";
+          deleteBtn.onclick = () => deleteItem(item.id);
+          tdActions.appendChild(deleteBtn);
+          tr.appendChild(tdActions);
+
+          tbody.appendChild(tr);
+        });
+      }
+
+      // アイテムを更新する関数
+      async function updateItem() {
+        const id = document.getElementById("update-id").value;
+        const name = document.getElementById("update-name").value;
+        const description = document.getElementById("update-description").value;
+
+        const query = `
+                mutation {
+                    updateItem(id: "${id}", name: "${name}", description: "${description}") {
+                        id
+                        name
+                        description
+                    }
+                }
+            `;
+
+        const response = await fetch(GRAPHQL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+
+        const result = await response.json();
+        console.log(result);
+        if (result.data.updateItem) {
+          alert("アイテムを更新しました。");
+          fetchItems(); // 更新後に一覧を更新
+        } else {
+          alert("アイテムの更新に失敗しました。");
+        }
+      }
+
+      // アイテムを削除する関数
+      async function deleteItem(id) {
+        if (!id) {
+          id = document.getElementById("delete-id").value;
+        }
+        if (!id) {
+          alert("削除するアイテムのIDを入力してください。");
+          return;
+        }
+
+        const query = `
+                mutation {
+                    deleteItem(id: "${id}")
+                }
+            `;
+
+        const response = await fetch(GRAPHQL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+
+        const result = await response.json();
+        console.log(result);
+        if (result.data.deleteItem) {
+          alert("アイテムを削除しました。");
+          fetchItems(); // 削除後に一覧を更新
+        } else {
+          alert("アイテムの削除に失敗しました。");
+        }
+      }
+
+      // ページロード時にアイテム一覧を取得
+      window.onload = fetchItems;
+    </script>
+  </body>
+</html>
