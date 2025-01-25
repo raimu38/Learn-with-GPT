@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draw Rectantle</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      canvas {
+        background-color: antiquewhite;
+        display: block;
+        margin: 0 auto;
+        margin-top: 100px;
+        border: solid 5px #635e5e;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="drawCanvas" width="400" height="320"></canvas>
+    <button id="onBtn">こっちです</button>
+    <button disabled id="offBtn">こっちじゃねえ</button>
+    <script>
+      let onBtn = document.getElementById("onBtn");
+      let offBtn = document.getElementById("offBtn");
+
+      onBtn.addEventListener("click", () => {
+        offBtn.disabled = false;
+        onBtn.disabled = true;
+        onBtn.innerText = "こっちじゃねえ";
+        offBtn.innerText = "こっちです";
+      });
+
+      offBtn.addEventListener("click", () => {
+        onBtn.disabled = false;
+        offBtn.disabled = true;
+        onBtn.innerText = "こっちです";
+        offBtn.innerText = "こっちじゃねえ";
+      });
+
+      const canvas = document.getElementById("drawCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let isDrawing = false;
+      let startX = 0;
+      let startY = 0;
+
+      canvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        const rect = canvas.getBoundingClientRect();
+        startX = e.clientX - rect.left;
+        startY = e.clientY - rect.top;
+      });
+
+      canvas.addEventListener("mousemove", (e) => {
+        if (!isDrawing) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const currentX = e.clientX - rect.left;
+        const currentY = e.clientY - rect.top;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.rect(startX, startY, currentX - startX, currentY - startY);
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.closePath();
+      });
+
+      canvas.addEventListener("mouseup", () => {
+        isDrawing = false;
+      });
+
+      //   canvas.addEventListener("mouseleave", () => {
+      //     isDrawing = false;
+      //   });
+    </script>
+  </body>
+</html>

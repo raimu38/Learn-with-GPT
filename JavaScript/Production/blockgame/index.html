@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlockGame</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      canvas {
+        background: rgb(158, 145, 158);
+        display: block;
+        margin: 0 auto;
+        margin-top: 10%;
+        border-radius: 10px;
+        border: solid;
+        color: rgb(67, 71, 71);
+        border-width: 20px;
+      }
+      button {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <button id="runButton">Start Game</button>
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      // ボールクラス
+      class Ball {
+        constructor(x, y, dx, dy, radius, color) {
+          this.x = x;
+          this.y = y;
+          this.dx = dx;
+          this.dy = dy;
+          this.radius = radius;
+          this.color = color;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+          ctx.closePath();
+        }
+
+        update() {
+          this.x += this.dx * 2;
+          this.y += this.dy;
+
+          // 壁で跳ね返る処理
+
+          if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+            this.dx *= -1;
+          }
+
+          if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+            this.dy *= -1;
+          }
+        }
+      }
+
+      // ファクトリーパターン: ボール生成ロジックをカプセル化
+      class BallFactory {
+        static createBall(x, y, dx, dy, radius, color) {
+          return new Ball(x, y, dx, dy, radius, color);
+        }
+      }
+
+      let balls = []; // ボールの配列
+      let intervalId = null;
+
+      function createBalls() {
+        // ファクトリーパターンを使ってボールを生成
+        balls = [
+          BallFactory.createBall(50, 50, 2, 3, 20, "red"),
+          BallFactory.createBall(200, 100, 3, 2, 30, "blue"),
+          BallFactory.createBall(300, 200, -2, -3, 25, "green"),
+        ];
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // すべてのボールを描画・更新
+        balls.forEach((ball) => {
+          ball.draw();
+          ball.update();
+        });
+      }
+
+      function startGame() {
+        if (intervalId !== null) {
+          clearInterval(intervalId);
+        }
+        createBalls(); // ボールを生成
+        intervalId = setInterval(draw, 10); // ゲームループを開始
+      }
+
+      document.getElementById("runButton").addEventListener("click", () => {
+        startGame();
+      });
+    </script>
+  </body>
+</html>
