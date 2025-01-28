@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export default function Hello() {
   return (
     <div>
@@ -21,6 +23,19 @@ export default function Hello() {
           space.
         </p>
       </div>
+      <div className="bg-sky-400 mt-5 dark:bg-yellow-600 px-10 py-10 justify-center rounded-2xl shadow-md shadow-zinc-500 ">
+        <div></div>
+      </div>
+      <Goodnight message="らいむくん" />
     </div>
+  );
+}
+
+function Goodnight({ message }: { message: string | undefined }) {
+  return (
+    <>
+      <h1 className="font-bold text-xl text-pink-600">さようなら</h1>
+      <p>ここに{message}を入れてね</p>
+    </>
   );
 }
