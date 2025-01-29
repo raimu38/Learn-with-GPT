@@ -1,4 +1,5 @@
 import { UUID } from "crypto";
+import { useEffect, useState } from "react";
 
 export default function Hello() {
   return (
@@ -26,16 +27,48 @@ export default function Hello() {
       <div className="bg-sky-400 mt-5 dark:bg-yellow-600 px-10 py-10 justify-center rounded-2xl shadow-md shadow-zinc-500 ">
         <div></div>
       </div>
-      <Goodnight message="らいむくん" />
+      <Goodnight message="らいむくん" age={21} />
     </div>
   );
 }
 
-function Goodnight({ message }: { message: string | undefined }) {
+interface GoodnightProps {
+  message?: string;
+  age?: number;
+}
+
+export function Goodnight({ message, age = 9 }: GoodnightProps) {
+  const [width, setWidth] = useState(0); // 初期値を 0 に設定
+
+  const [isExpanding, setIsExpanding] = useState(true); // 伸びるか縮むかを制御
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWidth((prev) => {
+        if (isExpanding && prev >= 300) {
+          setIsExpanding(false); // 上限に達したら縮む方向に変更
+          return prev - 5;
+        } else if (!isExpanding && prev <= 0) {
+          setIsExpanding(true); // 下限に達したら伸びる方向に変更
+          return prev + 5;
+        }
+
+        return isExpanding ? prev + 5 : prev - 5; // 状態に応じて増減
+      });
+    }, 7);
+
+    // クリーンアップ関数
+    return () => clearInterval(interval);
+  }, [isExpanding]); // `isExpanding` を依存配列に追加
+
   return (
     <>
+      <div className="bg-sky-100" style={{ width: `${width}px`, height: "50px", transition: "width 0.1s linear" }}>
+        <p>ブロック</p>
+      </div>
       <h1 className="font-bold text-xl text-pink-600">さようなら</h1>
       <p>ここに{message}を入れてね</p>
+      <p>私は{age}歳です</p>
     </>
   );
 }
