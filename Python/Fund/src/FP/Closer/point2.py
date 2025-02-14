@@ -1,3 +1,4 @@
+#!/usr/dev/env python3
 def create_conditional_calurator(base_rate, threshold=None, bonus_rate=None):
     def calculate_point(amount):
         point = amount * base_rate

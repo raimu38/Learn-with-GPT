@@ -1,3 +1,4 @@
+#!/usr/dev/env python3
 def discount_calculator(discount_rate):
     
     def apply_discount(price):

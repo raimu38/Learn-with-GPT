@@ -1,3 +1,4 @@
+#!/usr/dev/env python3
 def create_shopping_discount_calculator(base_rate,bonus_rate=None, threshold=None, extradiscount=None):
     def calculate_discount(price):
         discount = price * base_rate

@@ -1,0 +1,7 @@
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8000:80"
+  db:
+    image: postgres:13
