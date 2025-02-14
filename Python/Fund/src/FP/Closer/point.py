@@ -1,3 +1,4 @@
+#!/usr/dev/env python3
 def point_calculator(rate):
     def calculate_point(amount):
         return amount*(1-rate)

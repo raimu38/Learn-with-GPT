@@ -1,3 +1,4 @@
+#!/usr/dev/env python3
 def create_shipping_calculator(base_fee, border_line_fee):
     def fee_calculator(amount):
         if(amount >= border_line_fee):

@@ -1,3 +1,4 @@
+#!/usr/dev/env python3
 # # 手続き型プログラム
 # def calculate_total(order_amount):
 #     # 割引計算
