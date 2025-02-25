@@ -97,6 +97,7 @@ class Saicoro:
         self.me = random.randint(1,6)
         print(f"Me: {self.me}")
         Saicoro.total +=  self.me
+     
 
 
 SaicoroA = Saicoro()
