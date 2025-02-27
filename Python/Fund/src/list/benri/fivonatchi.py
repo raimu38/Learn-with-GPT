@@ -39,12 +39,12 @@ def fibonacci_optimized(n):
     return b
 
 
-def fibonacci_matrix(n):
-    if n < 2:
-        return n
-    F = np.array([[1, 1], [1, 0]], dtype=object)
-    result = np.linalg.matrix_power(F, n - 1)
-    return result[0][0]
+# def fibonacci_matrix(n):
+#     if n < 2:
+#         return n
+#     F = np.array([[1, 1], [1, 0]], dtype=object)
+#     result = np.linalg.matrix_power(F, n - 1)
+#     return result[0][0]
 
 def fibonacci_golden(n):
     phi = Decimal(1 + sqrt(5)) / Decimal(2)  # 黄金比を Decimal に変換
@@ -66,7 +66,7 @@ def fibonacci_parallel(n):
 N = 200000
 
 start_time = time.time()
-result = fibonacci_matrix(N)
+result = fibonacci(N)
 end_time = time.time()
 
 # print(f"Result: {result}")
