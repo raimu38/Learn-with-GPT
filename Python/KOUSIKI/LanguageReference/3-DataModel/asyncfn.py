@@ -19,6 +19,4 @@ async def main():
         print(i)
 
 
-asyncio.    
-
 
