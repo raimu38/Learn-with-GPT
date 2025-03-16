@@ -1,0 +1,47 @@
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m1e21935[m HEAD@{1}: reset: moving to HEAD~1
+[33md87f456[m HEAD@{2}: reset: moving to HEAD~1
+[33ma6cc65e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{3}: pull --rebase origin main (finish): returning to refs/heads/main
+[33ma6cc65e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{4}: pull --rebase origin main (pick): raspbery pi pico wo ugokasu
+[33md87f456[m HEAD@{5}: pull --rebase origin main (pick): C++hajimemasita raspberrypi to move raspberrypi
+[33m1e21935[m HEAD@{6}: pull --rebase origin main (start): checkout 1e219359e0410f345ea3d5ab0f8e3445d5ce960a
+[33md0ae3c8[m HEAD@{7}: rebase (abort): returning to refs/heads/main
+[33m1e21935[m HEAD@{8}: pull origin main --rebase (start): checkout 1e219359e0410f345ea3d5ab0f8e3445d5ce960a
+[33md0ae3c8[m HEAD@{9}: commit: raspbery pi pico wo ugokasu
+[33m31c4959[m HEAD@{10}: reset: moving to HEAD~1
+[33me157d5a[m HEAD@{11}: commit: raspbery pi pico wo ugokasu
+[33m31c4959[m HEAD@{12}: reset: moving to HEAD~1
+[33m75c3ede[m HEAD@{13}: commit: raspbery pi pico wo ugokasu
+[33m31c4959[m HEAD@{14}: reset: moving to HEAD~1
+[33m1312bfc[m HEAD@{15}: commit: raspbery pi pico wo ugokasu
+[33m31c4959[m HEAD@{16}: reset: moving to 31c4959
+[33m31c4959[m HEAD@{17}: reset: moving to 31c4959
+[33m1e21935[m HEAD@{18}: commit: pico
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{19}: reset: moving to HEAD~1
+[33m34ffac4[m HEAD@{20}: reset: moving to HEAD~1
+[33mf399464[m HEAD@{21}: commit: C++
+[33m34ffac4[m HEAD@{22}: commit: C++
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{23}: reset: moving to HEAD~1
+[33me56dc93[m HEAD@{24}: commit: C++
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{25}: reset: moving to HEAD~1
+[33m5356966[m HEAD@{26}: reset: moving to HEAD~1
+[33m226fd0d[m HEAD@{27}: commit: remove myenv
+[33m5356966[m HEAD@{28}: commit: C++
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{29}: reset: moving to HEAD~1
+[33md5e6904[m HEAD@{30}: commit: C++
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{31}: reset: moving to HEAD~1
+[33m920f286[m HEAD@{32}: commit: C++ started
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{33}: reset: moving to HEAD~1
+[33mbf55b12[m HEAD@{34}: reset: moving to HEAD~1
+[33m2fabec3[m HEAD@{35}: commit: Updated myenv
+[33mbf55b12[m HEAD@{36}: commit: Removed myenv from tracking
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{37}: reset: moving to HEAD~1
+[33mc1d7e22[m HEAD@{38}: commit: C++hajimemasita raspberrypi to move raspberrypi
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{39}: reset: moving to HEAD~1
+[33m9a9df20[m HEAD@{40}: commit: C++hajimemasita raspberrypi to move raspberrypi
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{41}: reset: moving to HEAD~1
+[33mf07b286[m HEAD@{42}: commit: C++hajimemasita raspberrypi to move raspberrypi
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{43}: reset: moving to HEAD~1
+[33m31c4959[m HEAD@{44}: commit: C++hajimemasita raspberrypi to move raspberrypi
+[33m1ee7a34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{45}: commit: lastIndexOf
+[33mf14bc8c[m HEAD@{46}: clone: from https://github.com/SharettleDeveloper/Learn-with-GPT.git
