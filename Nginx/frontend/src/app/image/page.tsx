@@ -13,39 +13,46 @@ const processImage = () => {
   img.crossOrigin = "anonymous";
   img.src = url;
 
-  img.onload = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+img.onload = () => {
+  const canvas = canvasRef.current;
+  const ctx = canvas.getContext("2d");
 
-    // ✅ キャンバスサイズを固定
-const fixedWidth = 800;
-const scale = fixedWidth / img.width;
-const scaledHeight = img.height * scale;
+  const fixedWidth = 800;
+  const scale = fixedWidth / img.width;
+  const scaledHeight = img.height * scale;
+  
+  canvas.width = fixedWidth;
+  canvas.height = scaledHeight;
 
-canvas.width = fixedWidth;
-canvas.height = scaledHeight;
+  // 一度だけグレースケール画像を描画する小さな仮キャンバスを作る
+  const tmpCanvas = document.createElement("canvas");
+  const tmpCtx = tmpCanvas.getContext("2d");
 
-    // ✅ キャンバスのサイズに合わせて画像をリサイズして描画
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  tmpCanvas.width = canvas.width / 5;
+  tmpCanvas.height = canvas.height / 5;
+  tmpCtx.drawImage(img, 0, 0, tmpCanvas.width, tmpCanvas.height);
 
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
+  const imageData = tmpCtx.getImageData(0, 0, tmpCanvas.width, tmpCanvas.height);
+  const data = imageData.data;
 
-    for (let i = 0; i < data.length; i += 4) {
-      const red = data[i];
-      const green = data[i + 1];
-      const blue = data[i + 2];
-      const gray = 0.299 * red + 0.587 * green + 0.114 * blue;
-      data[i] = gray;
-      data[i + 1] = gray;
-      data[i + 2] = gray;
-      //data[i + 3] = Math.random() * 255;
-    }
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+    data[i] = data[i + 1] = data[i + 2] = gray;
+  }
 
-    ctx.putImageData(imageData, 0, 0);
-    setImgLoaded(true);
-  };
+  tmpCtx.putImageData(imageData, 0, 0);
+
+  // 🎉 createPattern で繰り返し描画！
+  const pattern = ctx.createPattern(tmpCanvas, "repeat");
+  ctx.fillStyle = pattern;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  setImgLoaded(true);
 };
+}
 
   useEffect(() => {
     processImage(); // 最初に一回だけ読み込み
