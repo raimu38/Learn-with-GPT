@@ -1,12 +1,26 @@
 services:
   backend:
-    build: ./backend
+    build: ./backend #Dockerfileの位置 イメージを作成
+    volumes: #２つの役割がある。　一つはマウント、そしてもう一つは node_modulesをホストに書き出さずに依存衝突を回避
+      - ./backend:/usr/src/app  #コードの変更をそくじ 伝えるｍ
+      - /usr/src/app/node_modules
+    restart: always
     ports:
       - "8000:8000"
+    command: ["npm", "run", "dev"]
+    environment:
+      NODE_ENV: development
   frontend:
     build: ./frontend
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: always
     ports:
       - "3000:3000"
+    command: ["npm", "run", "dev"]
+    environment:
+      - NEXT_TURBOPACK_WATCHER=poll
   nginx:
     image: nginx:latest
     ports:

@@ -1,0 +1,37 @@
+'use client'
+
+import {useEffect} from 'react'
+
+const ImageTihiro = () => {
+
+ const url = "https://cdn.pixabay.com/photo/2025/03/17/14/43/bird-9476034_640.png"
+ const [imgSrc, setImageSrc] = useState(null);
+ useEffect(() => {
+   const img = new Image();
+   img.src = url;
+   img.onload = () => {
+      console.log("Image Get!", imag.width, img.height); 
+      setImageSrc(img.src);
+   };
+   img.onerror = () => {
+      console.log("Image Error!");
+   };
+ },[])
+    return(
+      <div> 
+        <img src={imgSrc} alt="Tihiro"/>
+      </div>
+    )
+}
+const ImageTutorial = () => {
+
+
+  return(
+   <div>
+    <h1>Image Component</h1>
+    <ImageTihiro/>
+   </div>
+  )
+}
+
+export default ImageTutorial;
