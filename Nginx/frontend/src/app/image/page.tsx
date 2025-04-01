@@ -18,7 +18,7 @@ const processImage = () => {
     const ctx = canvas.getContext("2d");
 
     // ✅ キャンバスサイズを固定
-const fixedWidth = 600;
+const fixedWidth = 800;
 const scale = fixedWidth / img.width;
 const scaledHeight = img.height * scale;
 
