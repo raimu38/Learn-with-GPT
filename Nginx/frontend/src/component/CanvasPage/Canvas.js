@@ -9,10 +9,8 @@ const CanvasComponent = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
     ctx.fillStyle = "red";
     ctx.fillRect(0, 0, 400, 600);
   }, []);
@@ -22,8 +20,6 @@ const CanvasComponent = () => {
     if (!canvas) return;
 
     const imageURL = canvas.toDataURL("image/png");
-    console.log("url:", imageURL);
-
     const link = document.createElement("a");
     link.href = imageURL;
     link.download = "my-canvas.png";
