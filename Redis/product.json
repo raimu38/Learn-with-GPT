@@ -1,0 +1,41 @@
+[
+  {"id":"veg:01","name":"Carrot","type":"Vegetable","price":120,"origin":"Hokkaido","expiry":"2025-05-10"},
+  {"id":"veg:02","name":"Tomato","type":"Vegetable","price":150,"origin":"Okinawa","expiry":"2025-05-08"},
+  {"id":"veg:03","name":"Lettuce","type":"Vegetable","price":200,"origin":"Chiba","expiry":"2025-05-12"},
+  {"id":"veg:04","name":"Cucumber","type":"Vegetable","price":100,"origin":"Kyoto","expiry":"2025-05-11"},
+  {"id":"veg:05","name":"Spinach","type":"Vegetable","price":180,"origin":"Fukushima","expiry":"2025-05-09"},
+  {"id":"veg:06","name":"Eggplant","type":"Vegetable","price":140,"origin":"Gunma","expiry":"2025-05-13"},
+  {"id":"veg:07","name":"Bell Pepper","type":"Vegetable","price":160,"origin":"Saga","expiry":"2025-05-14"},
+  {"id":"veg:08","name":"Radish","type":"Vegetable","price":90,"origin":"Akita","expiry":"2025-05-07"},
+  {"id":"veg:09","name":"Broccoli","type":"Vegetable","price":220,"origin":"Iwate","expiry":"2025-05-15"},
+  {"id":"veg:10","name":"Onion","type":"Vegetable","price":80,"origin":"Aomori","expiry":"2025-05-16"},
+
+  {"id":"meat:01","name":"Pork","type":"Meat","price":300,"origin":"Kyushu","expiry":"2025-05-12"},
+  {"id":"meat:02","name":"Beef","type":"Meat","price":550,"origin":"Kagoshima","expiry":"2025-05-14"},
+  {"id":"meat:03","name":"Chicken","type":"Meat","price":280,"origin":"Nagano","expiry":"2025-05-13"},
+  {"id":"meat:04","name":"Lamb","type":"Meat","price":620,"origin":"Hokkaido","expiry":"2025-05-11"},
+  {"id":"meat:05","name":"Turkey","type":"Meat","price":400,"origin":"Miyazaki","expiry":"2025-05-15"},
+  {"id":"meat:06","name":"Duck","type":"Meat","price":480,"origin":"Chiba","expiry":"2025-05-10"},
+  {"id":"meat:07","name":"Bacon","type":"Meat","price":350,"origin":"Tochigi","expiry":"2025-05-16"},
+
+  {"id":"fish:01","name":"Salmon","type":"Fish","price":450,"origin":"Hokkaido","expiry":"2025-05-06"},
+  {"id":"fish:02","name":"Tuna","type":"Fish","price":520,"origin":"Mie","expiry":"2025-05-07"},
+  {"id":"fish:03","name":"Mackerel","type":"Fish","price":330,"origin":"Aichi","expiry":"2025-05-08"},
+  {"id":"fish:04","name":"Cod","type":"Fish","price":380,"origin":"Akita","expiry":"2025-05-09"},
+  {"id":"fish:05","name":"Trout","type":"Fish","price":410,"origin":"Nagano","expiry":"2025-05-10"},
+  {"id":"fish:06","name":"Sardine","type":"Fish","price":290,"origin":"Iwate","expiry":"2025-05-11"},
+  {"id":"fish:07","name":"Snapper","type":"Fish","price":470,"origin":"Okinawa","expiry":"2025-05-12"},
+  {"id":"fish:08","name":"Halibut","type":"Fish","price":600,"origin":"Hokkaido","expiry":"2025-05-13"},
+
+  {"id":"proc:01","name":"Sausage","type":"Processed","price":200,"origin":"Chiba","expiry":"2025-06-01"},
+  {"id":"proc:02","name":"Ham","type":"Processed","price":250,"origin":"Gunma","expiry":"2025-06-02"},
+  {"id":"proc:03","name":"Cheese","type":"Processed","price":300,"origin":"Hokkaido","expiry":"2025-06-05"},
+  {"id":"proc:04","name":"Yogurt","type":"Processed","price":180,"origin":"Aomori","expiry":"2025-06-03"},
+  {"id":"proc:05","name":"Bread","type":"Processed","price":150,"origin":"Tokyo","expiry":"2025-06-04"},
+  {"id":"proc:06","name":"Butter","type":"Processed","price":220,"origin":"Hokkaido","expiry":"2025-06-06"},
+  {"id":"proc:07","name":"Tofu","type":"Processed","price":130,"origin":"Kyoto","expiry":"2025-06-07"},
+  {"id":"proc:08","name":"Jam","type":"Processed","price":240,"origin":"Niigata","expiry":"2025-06-08"},
+  {"id":"proc:09","name":"Noodles","type":"Processed","price":170,"origin":"Osaka","expiry":"2025-06-09"},
+  {"id":"proc:10","name":"Canned Beans","type":"Processed","price":190,"origin":"Nagano","expiry":"2025-06-10"}
+]
+

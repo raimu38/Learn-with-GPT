@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  python:
+    build: . 
+    image: python-redis-app
+    container_name: python_redis
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: python main.py
+    depends_on:
+      - redis
+
+volumes:
+  redis-data:
