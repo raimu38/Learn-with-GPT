@@ -12,7 +12,7 @@ const CanvasComponent = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.fillStyle = "red";
-    ctx.fillRect(0, 0, 400, 600);
+    ctx.fillRect(0, 0, width, height);
   }, []);
 
   const downloadImage = () => {
