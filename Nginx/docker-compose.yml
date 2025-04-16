@@ -4,7 +4,6 @@ services:
     volumes: #２つの役割がある。　一つはマウント、そしてもう一つは node_modulesをホストに書き出さずに依存衝突を回避
       - ./backend:/usr/src/app  #コードの変更をそくじ 伝えるｍ
       - /usr/src/app/node_modules
-    restart: always
     ports:
       - "8000:8000"
     command: ["npm", "run", "dev"]
@@ -15,7 +14,6 @@ services:
     volumes:
       - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
-    restart: always
     ports:
       - "3000:3000"
     command: ["npm", "run", "dev"]

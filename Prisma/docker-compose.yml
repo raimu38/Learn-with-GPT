@@ -1,0 +1,28 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: todo-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017/todo-app?retryWrites=true
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/app  # 開発時のホットリロード用（必要に応じて）
+      - /app/node_modules
+  
+  mongo:
+    image: mongo:5
+    container_name: todo-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

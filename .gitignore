@@ -7,3 +7,4 @@ vendor/
 */myenv/
 */venv/
 
+qdrant_storage/
