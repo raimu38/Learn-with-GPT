@@ -6,6 +6,10 @@ from typing import List, Optional
 from bson import ObjectId
 from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi.staticfiles import StaticFiles
+
+# "index.html" があるディレクトリを公開
+
 # カスタムスカラー: MongoDBのObjectIdを文字列として扱う
 @strawberry.type
 class Item:
@@ -95,6 +99,7 @@ graphql_app = GraphQLRouter(schema)
 # FastAPIアプリケーションの初期化
 app = FastAPI()
 
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
 # CORSの設定
 origins = [
     "http://localhost",
