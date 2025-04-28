@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: ./backend
+    container_name: nestjs-api
+    ports:
+      - "3000:3000"
+      - "35729:35729"   # LiveReload のデフォルトポート
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    # Dockerfile の CMD をそのまま使う
+    #    CMD ["npm", "run", "start:dev"]
+    # もし独自コマンドにしたい場合は下記をアンコメント
+    # command: ["npm", "run", "start:dev"]
