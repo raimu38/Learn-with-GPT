@@ -1,0 +1,158 @@
+==== combined.txt ====
+
+
+==== docker-compose.yml ====
+services:
+  fastapi-service:
+    build: ./fastapi-service
+    ports:
+      - "8000:8000"
+    container_name: micro-fastapi
+    volumes:
+      - ./fastapi-service/app:/app/app
+    networks:
+      - micro
+    command: ["uvicorn", "app.main:app", "--host"," 0.0.0.0", "--port", "8000","--reload"]
+
+  node:
+    build: ./node-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - fastapi-service
+    container_name: micro-node
+    volumes: 
+      - ./node-service:/app
+    networks:
+      - micro
+    command: ["npm","run", "start"]
+
+networks:
+  micro:
+    driver: bridge
+
+
+==== cfc.py ====
+import os
+import sys
+
+def combine_files(root_dir, output_file):
+    """
+    指定されたディレクトリ以下のすべてのファイルの内容を、
+    ディレクトリ構造を維持した相対パスとともに一つのファイルに結合します。
+    改行コードは Unix 形式に変換します。
+
+    Args:
+        root_dir (str): 検索を開始するルートディレクトリ。
+        output_file (str): 出力ファイル名。
+    """
+    with open(output_file, 'w', encoding='utf-8', newline='\n') as outfile:
+        for root, _, files in os.walk(root_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                relative_path = os.path.relpath(file_path, root_dir)
+                outfile.write(f"==== {relative_path} ====\n")
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as infile:
+                        content = infile.read().replace('\r\n', '\n').replace('\r', '\n')
+                        outfile.write(content)
+                except UnicodeDecodeError:
+                    print(f"警告: {file_path} はテキストファイルとして読み込めませんでした。スキップします。")
+                outfile.write("\n\n")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("使い方: python combine_files_callable.py <検索ルートディレクトリ> <出力ファイル名>")
+        sys.exit(1)
+
+    root_directory = sys.argv[1]
+    output_filename = sys.argv[2]
+    combine_files(root_directory, output_filename)
+    print(f"ディレクトリ '{root_directory}' 以下のすべてのファイルの内容を '{output_filename}' に出力しました (改行コードを処理済み)。")
+
+
+==== node-service/index.js ====
+const express = require('express')
+const axios = require('axios')
+const app = express();
+const PORT = 3000;
+
+app.get('/service/ping', async (req, res) => {
+  try {
+    const response = await axios.get('http://fastapi-service:8000/api/data');
+    res.json({source : 'node-service', data: response.data});
+  }catch(error){
+    res.status(500).json({error: 'Failed to contact fastapi-service'});
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Node srvice runnning on port ${PORT}`);
+});
+
+
+==== node-service/package.json ====
+{
+  "name": "node-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts":{
+    "start": "nodemon index.js" 
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies":{
+    "nodemon": "^3.0.0"
+  }
+}
+
+
+==== node-service/Dockerfile ====
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY index.js .
+CMD ["bash"]
+
+
+
+==== fastapi-service/requirements.txt ====
+fastapi
+uvicorn
+
+
+==== fastapi-service/Dockerfile ====
+FROM python:3.12-slim
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app /app/app
+
+CMD ["bash"]
+
+
+
+==== fastapi-service/app/main.py ====
+from fastapi import FastAPI
+from fastapi.middleware.cors  import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
+@app.get("/api/data")
+def get_data():
+    return {"message": "Hello from FastAPI"}
+
+
+

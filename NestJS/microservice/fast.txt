@@ -1,0 +1,188 @@
+==== requirements.txt ====
+fastapi
+uvicorn
+pytest
+pytest-asyncio
+httpx
+
+
+==== Dockerfile ====
+FROM python:3.12-slim
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . /app/app
+
+CMD ["bash"]
+
+
+
+==== app/main.py ====
+from fastapi import FastAPI
+from fastapi.middleware.cors  import CORSMiddleware
+from app.controllers import items
+
+app = FastAPI()
+app.include_router(items.router, prefix="/items", tags=["items"])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
+
+@app.get("/api/data")
+def get_data():
+    return {"message": "Hello from FastAPI"}
+
+
+
+==== app/__pycache__/main.cpython-312.pyc ====
+
+
+==== app/models/item.py ====
+from pydantic import BaseModel
+
+class Item(BaseModel):
+    id: int
+    name: str
+    price: float
+
+
+
+
+==== app/models/__pycache__/item.cpython-312.pyc ====
+
+
+==== app/services/items.py ====
+from typing import List, Optional
+from app.repositories.items import fetch_all, fetch_by_id
+from app.models.item import Item
+
+def get_items() -> List[Item]:
+    return fetch_all()
+
+def get_item(item_id: int) -> Optional[Item, None]:
+    return fetch_by_id(item_id)
+
+
+
+==== app/services/__pycache__/items.cpython-312.pyc ====
+
+
+==== app/controllers/items.py ====
+from fastapi import APIRouter, HTTPException
+from typing import List
+from app.services.items import get_items, get_item
+from app.models.item import Item
+
+router = APIRouter()
+
+@router.get("/", response_model=List[Item])
+def read_items():
+    return get_items()
+
+@router.get("/{item_id}", response_model=item)
+def read_item(item_id: int):
+    item = get_item(item_id)
+    if not item:
+        raise HTTPExeption(status_code=404, detail="Item not found")
+    return item
+
+
+
+
+
+==== app/controllers/__pycache__/items.cpython-312.pyc ====
+
+
+==== app/repositories/items.py ====
+from typing import List, Optional
+from app.models.item import Item
+
+_fake_db =[
+        Item(id=1, name="Apple", price=530),
+        Item(id=2, name="Banana", price=300),
+]
+
+def fetch_all() -> List[Item]:
+    return _fake_db
+
+def fetch_by_id(item_id: int) -> Optional[Item, None]:
+    return next(( item for item in _fake_db if item.id == item_id),None)
+
+
+
+==== app/repositories/__pycache__/items.cpython-312.pyc ====
+
+
+==== app/.pytest_cache/README.md ====
+# pytest cache directory #
+
+This directory contains data from the pytest's cache plugin,
+which provides the `--lf` and `--ff` options, as well as the `cache` fixture.
+
+**Do not** commit this to version control.
+
+See [the docs](https://docs.pytest.org/en/stable/how-to/cache.html) for more information.
+
+
+==== app/.pytest_cache/.gitignore ====
+# Created by pytest automatically.
+*
+
+
+==== app/.pytest_cache/CACHEDIR.TAG ====
+Signature: 8a477f597d28d172789f06886806bc55
+# This file is a cache directory tag created by pytest.
+# For information about cache directory tags, see:
+#	https://bford.info/cachedir/spec.html
+
+
+==== app/.pytest_cache/v/cache/nodeids ====
+[]
+
+==== app/.pytest_cache/v/cache/stepwise ====
+[]
+
+==== tests/test_items.py ====
+def test_read_items(client):
+    response = client.get("/items/")
+    assert response.status_code == 200
+    data = response.json()
+    assert ininstance(data, list)
+    assert len(data) >= 2
+
+def test_read_item_suncess(client):
+    response = client.get("/items/1")
+    assert response.status_code == 200
+    item = response.json()
+    assert item["id"] == 1
+    assert item["name"] == "Apple"
+
+def test_read_item_not_found(client):
+    response = client.get("/items/999")
+    assert response.status_code == 404
+
+
+==== tests/conftest.py ====
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
+
+@pytest.fixture(scope="module")
+def client():
+    with TestClient(app) as c:
+        yield c
+
+
+
+
+==== tests/__pycache__/conftest.cpython-312-pytest-8.3.5.pyc ====
+
+

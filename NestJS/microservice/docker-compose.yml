@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  fastapi-service:
+    build: ./fastapi-service
+    container_name: micro-fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./fastapi-service:/app
+    networks:
+      - micro
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - "0.0.0.0"
+      - --port
+      - "8000"
+      - --reload
+
+  node:
+    build: ./node-service
+    container_name: micro-node
+    depends_on:
+      - fastapi-service
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./node-service:/app
+      - node_modules:/app/node_modules   # ← 名前付きボリュームをここでマウント
+    networks:
+      - micro
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - npm install && npm run start
+
+networks:
+  micro:
+    driver: bridge
+
+volumes:
+  node_modules: {}   # ← ここで named volume を定義
