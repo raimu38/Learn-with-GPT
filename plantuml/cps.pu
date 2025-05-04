@@ -1,0 +1,45 @@
+@startuml
+' 参加者定義
+participant Client
+participant AuthService
+participant Server
+participant DB
+
+' ── 認証処理 ──
+group 認証
+  Client -> AuthService: login(username, password)
+  activate AuthService
+  AuthService --> Client: token
+  deactivate AuthService
+end group
+
+' ── リソースアクセスを繰り返し ──
+loop リソースアクセスを繰り返す
+  Client -> Server: GET /resource\nAuthorization: Bearer token
+  activate Server
+  alt token 有効
+    Server -> DB: SELECT * FROM resource
+    activate DB
+    DB --> Server: data
+    deactivate DB
+    Server --> Client: 200 OK + data
+  else token 無効
+    Server --> Client: 401 Unauthorized
+    break
+  end
+  deactivate Server
+end
+
+' ── ログアウト（オプション） ──
+opt ログアウト
+  Client -> Server: POST /logout\nAuthorization: Bearer token
+  activate Server
+  Server --> AuthService: invalidate(token)
+  activate AuthService
+  AuthService --> Server: OK
+  deactivate AuthService
+  Server --> Client: 200 OK
+  deactivate Server
+end
+
+@enduml

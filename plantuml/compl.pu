@@ -1,0 +1,82 @@
+@startuml
+title サブスクリプション購入ワークフロー
+autonumber "<b>%d</b>"
+
+actor User
+participant Frontend
+participant AuthService
+participant SubscriptionService as SubSvc
+boundary PaymentGateway
+control EmailService
+database AppDB
+
+'── セッション確認 ──
+group セッション確認
+  User -> Frontend: checkSession()
+  activate Frontend
+  Frontend -> AuthService: validate(token)
+  activate AuthService
+  AuthService --> Frontend: OK／NG
+  deactivate AuthService
+  Frontend --> User: sessionStatus
+  deactivate Frontend
+end group
+
+'── カート操作 ──
+group カート操作
+  User -> Frontend: addToCart(itemId)
+  activate Frontend
+  Frontend --> User: cartUpdated
+  deactivate Frontend
+end group
+
+'── 支払い試行（最大2回） ──
+loop 支払い試行
+  Frontend -> PaymentGateway: pay(amount)
+  activate PaymentGateway
+  PaymentGateway --> Frontend: result
+  deactivate PaymentGateway
+  break if result == success
+end
+
+alt 支払い成功
+  '── サブスクリプション登録＆サービス有効化（並行） ──
+  par DB登録
+    Frontend -> AppDB: insertSubscription(userId, planId)
+    activate AppDB
+    AppDB --> Frontend: subscriptionId
+    deactivate AppDB
+  and サービス呼び出し
+    Frontend -> SubSvc: activateSubscription(subscriptionId)
+    activate SubSvc
+    SubSvc --> Frontend: activated
+    deactivate SubSvc
+  end
+
+  '── メール通知オプション ──
+  opt メール通知
+    Frontend -> EmailService: sendSignupEmail(userId)
+    activate EmailService
+    EmailService --> Frontend: emailSent
+    deactivate EmailService
+  end
+
+  '── クリティカルセクション：プラン利用数カウント ──
+  critical プランカウント更新
+    Frontend -> AppDB: incrementPlanCount(planId)
+  end
+
+else 支払い失敗
+  Frontend --> User: paymentFailed
+end
+
+ref over SubSvc: サブスクリプション詳細フローは別図参照
+
+note over User, Frontend
+  ユーザーがサブスクリプションを購入する際の
+  認証、カート操作、支払い、登録、通知を
+  一連の流れで示しています。
+end note
+
+@enduml
+

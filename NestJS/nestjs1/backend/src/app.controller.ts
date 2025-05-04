@@ -1,20 +1,24 @@
 // src/app.controller.ts
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiProperty } from '@nestjs/swagger';
 
 class CreateUserDto {
+  @ApiProperty({example:'Taro', description:'ユーザー名だばさ'})
   name!: string;
+
+  @ApiProperty({example:'taro@example.com', description:'Email'})
   email!: string;
 }
 
-@ApiTags('users')
+//@ApiTags('users')
 @Controller('users')
 export class UsersController {
   @Get()
-  @ApiOperation({ summary: 'ユーザー一覧を取得' })
+  @ApiOperation({ summary: 'ユーザー aa 一覧を取得' })
   @ApiResponse({ status: 200, description: 'ユーザーの配列を返す' })
+  @ApiResponse({ status:300, description: '失敗じゃ'})
   getAll() {
-    return [{ id: 1, name: 'Taro', email: 'taro@example.com' }];
+    return [{ id: 1, name: 'Taro', email: 'taro@example.com' },{id:2, name:'Hanako',email:'hanako@example.com'}];
   }
 
   @Get(':id')

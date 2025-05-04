@@ -19,9 +19,17 @@ class CreateUserDto {
     name;
     email;
 }
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'Taro', description: 'ユーザー名だばさ' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'taro@example.com', description: 'Email' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "email", void 0);
 let UsersController = class UsersController {
     getAll() {
-        return [{ id: 1, name: 'Taro', email: 'taro@example.com' }];
+        return [{ id: 1, name: 'Taro', email: 'taro@example.com' }, { id: 2, name: 'Hanako', email: 'hanako@example.com' }];
     }
     getById(id) {
         return { id, name: 'Taro', email: 'taro@example.com' };
@@ -33,8 +41,9 @@ let UsersController = class UsersController {
 exports.UsersController = UsersController;
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'ユーザー一覧を取得' }),
+    (0, swagger_1.ApiOperation)({ summary: 'ユーザー aa 一覧を取得' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'ユーザーの配列を返す' }),
+    (0, swagger_1.ApiResponse)({ status: 300, description: '失敗じゃ' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -58,7 +67,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "create", null);
 exports.UsersController = UsersController = __decorate([
-    (0, swagger_1.ApiTags)('users'),
     (0, common_1.Controller)('users')
 ], UsersController);
 let HealthController = class HealthController {

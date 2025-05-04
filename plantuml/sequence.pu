@@ -1,0 +1,30 @@
+@startuml
+' 背景色とフォント設定
+skinparam backgroundColor #F0F0F0
+skinparam defaultFontName "Noto Sans"
+skinparam defaultFontSize 12
+
+' ライフラインとメッセージ色
+skinparam sequenceLifeLineBorderColor #888888
+skinparam sequenceMessageColor DarkGreen
+skinparam sequenceArrowColor DarkBlue
+
+' 参加者（participant）ごとの背景・枠線色設定
+skinparam participantBackgroundColor #EEF7FF
+skinparam participantBorderColor #1F78C1
+
+participant Client
+participant Server
+participant DB
+
+Client -> Server: HTTP Request
+activate Server
+
+Server -> DB: SELECT * FROM users
+activate DB
+DB --> Server: Query Result
+deactivate DB
+
+Server --> Client: HTTP Response
+deactivate Server
+@enduml

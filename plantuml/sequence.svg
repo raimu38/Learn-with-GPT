@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="220px" preserveAspectRatio="none" style="width:324px;height:220px;background:#F0F0F0;" version="1.1" viewBox="0 0 324 220" width="324px" zoomAndPan="magnify"><defs><filter height="300%" id="f1reu7mch6g19y" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1reu7mch6g19y)" height="91.0323" style="stroke: #888888; stroke-width: 1.0;" width="10" x="144" y="70.6882"/><rect fill="#FFFFFF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #888888; stroke-width: 1.0;" width="10" x="295" y="101.0323"/><line style="stroke: #888888; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="33" x2="33" y1="38.3441" y2="179.7206"/><line style="stroke: #888888; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="148.5" x2="148.5" y1="38.3441" y2="179.7206"/><line style="stroke: #888888; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="299.5" x2="299.5" y1="38.3441" y2="179.7206"/><rect fill="#EEF7FF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #1F78C1; stroke-width: 1.5;" width="46" x="8" y="3"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="32" x="15" y="22.8281">Client</text><rect fill="#EEF7FF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #1F78C1; stroke-width: 1.5;" width="46" x="8" y="178.7206"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="32" x="15" y="198.5487">Client</text><rect fill="#EEF7FF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #1F78C1; stroke-width: 1.5;" width="51" x="121.5" y="3"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="128.5" y="22.8281">Server</text><rect fill="#EEF7FF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #1F78C1; stroke-width: 1.5;" width="51" x="121.5" y="178.7206"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="128.5" y="198.5487">Server</text><rect fill="#EEF7FF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #1F78C1; stroke-width: 1.5;" width="31" x="282.5" y="3"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="17" x="289.5" y="22.8281">DB</text><rect fill="#EEF7FF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #1F78C1; stroke-width: 1.5;" width="31" x="282.5" y="178.7206"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="17" x="289.5" y="198.5487">DB</text><rect fill="#FFFFFF" filter="url(#f1reu7mch6g19y)" height="91.0323" style="stroke: #888888; stroke-width: 1.0;" width="10" x="144" y="70.6882"/><rect fill="#FFFFFF" filter="url(#f1reu7mch6g19y)" height="30.3441" style="stroke: #888888; stroke-width: 1.0;" width="10" x="295" y="101.0323"/><polygon fill="#00008B" points="132,66.6882,142,70.6882,132,74.6882,136,70.6882" style="stroke: #00008B; stroke-width: 1.0;"/><line style="stroke: #00008B; stroke-width: 1.0;" x1="33" x2="138" y1="70.6882" y2="70.6882"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="78" x="40" y="65.1722">HTTP Request</text><polygon fill="#00008B" points="283,97.0323,293,101.0323,283,105.0323,287,101.0323" style="stroke: #00008B; stroke-width: 1.0;"/><line style="stroke: #00008B; stroke-width: 1.0;" x1="154" x2="289" y1="101.0323" y2="101.0323"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="122" x="161" y="95.5163">SELECT * FROM users</text><polygon fill="#00008B" points="165,127.3765,155,131.3765,165,135.3765,161,131.3765" style="stroke: #00008B; stroke-width: 1.0;"/><line style="stroke: #00008B; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="159" x2="299" y1="131.3765" y2="131.3765"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="71" x="171" y="125.8604">Query Result</text><polygon fill="#00008B" points="44,157.7206,34,161.7206,44,165.7206,40,161.7206" style="stroke: #00008B; stroke-width: 1.0;"/><line style="stroke: #00008B; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="38" x2="148" y1="161.7206" y2="161.7206"/><text fill="#000000" font-family="Noto Sans" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="87" x="50" y="156.2045">HTTP Response</text><!--MD5=[22471487bc8b63d52979fbdc085cabb9]
+@startuml
+skinparam backgroundColor #F0F0F0
+skinparam defaultFontName "Noto Sans"
+skinparam defaultFontSize 12
+
+skinparam sequenceLifeLineBorderColor #888888
+skinparam sequenceMessageColor DarkGreen
+skinparam sequenceArrowColor DarkBlue
+
+skinparam participantBackgroundColor #EEF7FF
+skinparam participantBorderColor #1F78C1
+
+participant Client
+participant Server
+participant DB
+
+Client -> Server: HTTP Request
+activate Server
+
+Server -> DB: SELECT * FROM users
+activate DB
+DB - -> Server: Query Result
+deactivate DB
+
+Server - -> Client: HTTP Response
+deactivate Server
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 19:22:07 JST 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 21.0.6+7-Ubuntu-124.04.1
+Operating System: Linux
+Default Encoding: UTF-8
+Language: ja
+Country: JP
+--></g></svg>
