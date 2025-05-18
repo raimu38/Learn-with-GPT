@@ -1,0 +1,8 @@
+services:
+  pytest:
+    build: .
+    container_name: pytest
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["pytest"]

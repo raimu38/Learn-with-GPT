@@ -1,0 +1,18 @@
+services:
+  vite-test:
+    build: .
+    container_name: vite-test
+    user: "${UID}:${GID}"
+    volumes:
+      - .:/app
+      - vite-test-node_modules_volume:/app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  vite-test-node_modules_volume:
+
+
+
