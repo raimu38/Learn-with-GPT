@@ -1,0 +1,9 @@
+services:
+  jupyter-on-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/work:cached
+    working_dir: /work
+    command: sleep infinity

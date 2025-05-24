@@ -1,0 +1,11 @@
+{
+  "name": "vision-dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "jupyter-on-container",
+  "workspaceFolder": "/work",
+  "extensions": ["ms-python.python", "ms-toolsai.jupyter", "vscodevim.vim"],
+  "settings": {
+    "python.defaultInterpreterPath": "/usr/local/bin/python"
+  },
+  "postCreateCommand": "python -m ipykernel install --user --name=vision"
+}
