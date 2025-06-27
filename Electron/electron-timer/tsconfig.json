@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "strict": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"]
+}
+

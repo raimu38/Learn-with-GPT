@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix   # X11 ソケット共有
+    environment:
+      - DISPLAY=${DISPLAY}
+    network_mode: host               # GUI 転送のためホストネットワーク
+    tty: true
+

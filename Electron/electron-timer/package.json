@@ -1,0 +1,17 @@
+{
+  "name": "electron-timer",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "npm run build && electron dist/main.js"
+  },
+  "dependencies": {
+    "electron": "36.5.0"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}
+
