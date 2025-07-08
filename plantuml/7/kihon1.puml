@@ -1,0 +1,24 @@
+@startuml
+class User {
+  + id: int
+  + name: string
+  --
+  +authenticate(): void
+
+}
+class Product{
+  + id: int
+  + name: string
+  + price: double
+}
+class Order{
+  + id: int
+  + orderDate: Date
+}
+
+' Order include many Products'
+User "1" -- "0..*" Order : has
+Order "*" -- "*" Product: contains
+
+@enduml
+

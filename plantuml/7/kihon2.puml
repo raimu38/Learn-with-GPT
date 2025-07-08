@@ -1,0 +1,32 @@
+@startuml
+skinparam linetype ortho
+
+entity User {
+    *id : integer <<PK>>
+    --
+    name : varchar
+}
+
+entity Order {
+    *id : integer <<PK>>
+    --
+    orderDate : date
+}
+
+entity Product {
+    *id : integer <<PK>>
+    --
+    name : varchar
+    price : decimal
+}
+
+' User と Order の関係: 1対多
+' User は複数の Order を持つ (1人のユーザーが複数の注文)
+User ||--o{ Order
+
+' Order と Product の関係: 多対多 (中間テーブルが必要)
+' この例では簡易的に直接多対多を示す
+' 通常は OrderItem のような中間エンティティを介して表現
+Order }|..|{ Product
+
+@enduml
