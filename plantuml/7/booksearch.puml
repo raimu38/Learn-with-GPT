@@ -1,0 +1,20 @@
+@startuml
+actor ユーザー
+participant "Webブラウザ" as Browser
+participant "Webアプリケーションサーバー" as AppServer
+database "データベース" as DB
+
+ユーザー -> Browser: オンライン書店にアクセス
+activate Browser
+Browser -> AppServer: 書籍検索リクエスト(キーワード)
+activate AppServer
+AppServer -> DB: 書籍情報を取得(キーワード)
+note right of DB: SQLクエリを続行
+note left of DB: VectorDBも使用
+activate DB
+DB --> AppServer: 検索結果
+deactivate DB
+AppServer --> Browser: 検索結果を表示
+deactivate AppServer
+deactivate Browser
+@enduml
