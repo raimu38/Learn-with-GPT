@@ -1,0 +1,19 @@
+@startuml
+!theme hacker
+class Department{
+ + id: number
+ +  name: string 
+  phoneNumber: string
+  address: string
+  member: number
+  --
++ update: void
++ delete: void if member == 0
+}
+
+class busyos{
+  
+}
+
+}
+@enduml

@@ -1,0 +1,617 @@
+@startuml
+!theme mars
+' Set PlantUML to optimize for large diagrams and reduce memory footprint
+' This might sometimes affect rendering speed slightly but improves stability for huge graphs
+skinparam maxMessageSize 250
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+
+hide circle
+skinparam linetype ortho
+
+title グローバルサプライチェーン・ロジスティクス管理プラットフォーム ER図 (概念設計)
+
+' --- 0. Core Geographic & Time Data (Defined first to be referenced by others) ---
+entity Currency {
+  + code: VARCHAR(3) <<PK>> "e.g., USD, JPY"
+  * name: VARCHAR(100)
+  * symbol: VARCHAR(10)
+  * exchange_rate_to_usd: DECIMAL(19, 8)
+  last_updated_at: TIMESTAMP
+}
+
+entity Country {
+  + code: VARCHAR(3) <<PK>> "e.g., USA, JPN"
+  * name: VARCHAR(255)
+  * calling_code: VARCHAR(10)
+  * default_currency_code: VARCHAR(3) <<FK>>
+  * timezone_offset_utc: VARCHAR(10) "e.g., +09:00"
+}
+
+entity Timezone {
+  + id: UUID <<PK>>
+  * iana_name: VARCHAR(255) <<Unique>> "e.g., America/New_York"
+  * utc_offset: VARCHAR(10)
+  description: VARCHAR(255)
+}
+
+entity Address {
+  + id: UUID <<PK>>
+  * street_address: VARCHAR(255)
+  * city: VARCHAR(100)
+  * state_province: VARCHAR(100)
+  * postal_code: VARCHAR(20)
+  * country_code: VARCHAR(3) <<FK>>
+  * latitude: DECIMAL(9, 6)
+  * longitude: DECIMAL(9, 6)
+  * timezone_id: UUID <<FK>>
+}
+
+Country ||--o{ Currency : "uses"
+Country ||--o{ Address : "is in"
+Timezone ||--o{ Address : "has"
+
+
+' --- 1. Core Organizations & Users ---
+entity Organization {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255) <<Unique>>
+  * type: ENUM('manufacturer', 'supplier', 'carrier', 'warehouse', 'retailer', 'customer', 'financial_institution', 'government_agency')
+  * legal_entity_name: VARCHAR(255)
+  * tax_id: VARCHAR(50) <<Unique>>
+  status: ENUM('active', 'inactive')
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity User {
+  + id: UUID <<PK>>
+  * organization_id: UUID <<FK>>
+  * email: VARCHAR(255) <<Unique>>
+  * password_hash: VARCHAR(255)
+  * first_name: VARCHAR(100)
+  * last_name: VARCHAR(100)
+  * phone_number: VARCHAR(20)
+  * role_id: UUID <<FK>>
+  status: ENUM('active', 'inactive', 'suspended')
+  last_login_at: TIMESTAMP
+}
+
+entity Role {
+  + id: UUID <<PK>>
+  * name: VARCHAR(100) <<Unique>> "e.g., Admin, Procurement, Logistics, Finance, Sales"
+  description: TEXT
+}
+
+entity Permission {
+  + id: UUID <<PK>>
+  * name: VARCHAR(100) <<Unique>> "e.g., order:read, shipment:create, invoice:approve"
+  description: TEXT
+}
+
+entity RolePermission {
+  + role_id: UUID <<PK>> <<FK>>
+  + permission_id: UUID <<PK>> <<FK>>
+}
+
+Organization ||--o{ User : "employs"
+User ||--o| Role : "has"
+Role "1" -- "*" RolePermission : "has"
+Permission "1" -- "*" RolePermission : "is granted to"
+Organization ||--o{ Address : "has business address"
+Address "1" -- "0..*" Organization : "is physical address of"
+
+
+' --- 2. Product & Inventory Management ---
+entity Category {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255) <<Unique>>
+  description: TEXT
+  parent_category_id: UUID <<FK>>
+}
+
+entity Product {
+  + id: UUID <<PK>>
+  * manufacturer_id: UUID <<FK>> "Originator"
+  * sku: VARCHAR(100) <<Unique>>
+  * name: VARCHAR(255)
+  description: TEXT
+  * category_id: UUID <<FK>>
+  unit_of_measure: VARCHAR(20) "e.g., pcs, kg, liters"
+  weight_per_unit_kg: DECIMAL(10, 3)
+  volume_per_unit_m3: DECIMAL(10, 3)
+  hazardous_material_flag: BOOLEAN
+  shelf_life_days: INTEGER
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity Batch {
+  + id: UUID <<PK>>
+  * product_id: UUID <<FK>>
+  * batch_number: VARCHAR(100) <<Unique>>
+  * manufactured_date: DATE
+  * expiry_date: DATE
+  * quantity: DECIMAL(19, 4)
+  * status: ENUM('produced', 'in_transit', 'in_warehouse', 'sold', 'recalled')
+  created_at: TIMESTAMP
+}
+
+entity Warehouse {
+  + id: UUID <<PK>>
+  * organization_id: UUID <<FK>> "Owner"
+  * name: VARCHAR(255)
+  * address_id: UUID <<FK>>
+  * capacity_sqm: DECIMAL(10, 2)
+  status: ENUM('active', 'inactive')
+}
+
+entity LocationBin {
+  + id: UUID <<PK>>
+  * warehouse_id: UUID <<FK>>
+  * bin_code: VARCHAR(50) <<Unique>>
+  * capacity_units: INTEGER
+  * type: ENUM('storage', 'picking', 'shipping')
+}
+
+entity Inventory {
+  + id: UUID <<PK>>
+  * batch_id: UUID <<FK>>
+  * location_bin_id: UUID <<FK>>
+  * quantity_on_hand: DECIMAL(19, 4)
+  * reserved_quantity: DECIMAL(19, 4)
+  last_updated_at: TIMESTAMP
+}
+
+Organization "1" -- "*" Product : "manufactures"
+Category "1" -- "0..*" Category : "has parent"
+Category ||--o{ Product : "categorizes"
+Product ||--o{ Batch : "has"
+Organization "1" -- "*" Warehouse : "owns"
+Warehouse ||--o{ LocationBin : "contains"
+Batch ||--o{ Inventory : "is stored as"
+LocationBin ||--o{ Inventory : "holds"
+
+
+' --- 3. Procurement & Sales Orders ---
+entity PurchaseOrder {
+  + id: UUID <<PK>>
+  * buyer_organization_id: UUID <<FK>>
+  * supplier_organization_id: UUID <<FK>>
+  * order_date: TIMESTAMP
+  * required_delivery_date: DATE
+  * total_amount: DECIMAL(19, 4)
+  * currency: VARCHAR(3)
+  * status: ENUM('draft', 'pending_approval', 'approved', 'issued', 'partially_received', 'completed', 'cancelled')
+  created_by_user_id: UUID <<FK>>
+  approved_by_user_id: UUID <<FK>>
+}
+
+entity PurchaseOrderItem {
+  + id: UUID <<PK>>
+  * purchase_order_id: UUID <<FK>>
+  * product_id: UUID <<FK>>
+  * ordered_quantity: DECIMAL(19, 4)
+  * unit_price: DECIMAL(19, 4)
+  received_quantity: DECIMAL(19, 4)
+}
+
+entity SalesOrder {
+  + id: UUID <<PK>>
+  * seller_organization_id: UUID <<FK>>
+  * customer_organization_id: UUID <<FK>>
+  * order_date: TIMESTAMP
+  * requested_delivery_date: DATE
+  * total_amount: DECIMAL(19, 4)
+  * currency: VARCHAR(3)
+  * status: ENUM('new', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled')
+  created_by_user_id: UUID <<FK>>
+}
+
+entity SalesOrderItem {
+  + id: UUID <<PK>>
+  * sales_order_id: UUID <<FK>>
+  * product_id: UUID <<FK>>
+  * ordered_quantity: DECIMAL(19, 4)
+  * unit_price: DECIMAL(19, 4)
+  shipped_quantity: DECIMAL(19, 4)
+}
+
+Organization "1" -- "*" PurchaseOrder : "issues"
+Organization "1" -- "*" PurchaseOrder : "receives"
+PurchaseOrder ||--o{ PurchaseOrderItem : "includes"
+Product ||--o{ PurchaseOrderItem : "references"
+
+Organization "1" -- "*" SalesOrder : "sells to"
+Organization "1" -- "*" SalesOrder : "is customer of"
+SalesOrder ||--o{ SalesOrderItem : "includes"
+Product ||--o{ SalesOrderItem : "references"
+
+
+' --- 4. Logistics & Shipping ---
+entity Shipment {
+  + id: UUID <<PK>>
+  * origin_warehouse_id: UUID <<FK>>
+  * destination_address_id: UUID <<FK>>
+  * carrier_organization_id: UUID <<FK>>
+  * sales_order_item_id: UUID <<FK>> "Can be multiple order items"
+  * purchase_order_item_id: UUID <<FK>> "Can be multiple order items"
+  * tracking_number: VARCHAR(255) <<Unique>>
+  * estimated_departure: TIMESTAMP
+  * estimated_arrival: TIMESTAMP
+  * actual_departure: TIMESTAMP
+  * actual_arrival: TIMESTAMP
+  * status: ENUM('pending', 'scheduled', 'in_transit', 'delivered', 'delayed', 'cancelled')
+  * freight_cost: DECIMAL(19, 4)
+  * currency: VARCHAR(3)
+  bill_of_lading_number: VARCHAR(255)
+}
+
+entity ShipmentItem {
+  + id: UUID <<PK>>
+  * shipment_id: UUID <<FK>>
+  * batch_id: UUID <<FK>>
+  * shipped_quantity: DECIMAL(19, 4)
+  * current_location_id: UUID <<FK>> "Dynamic tracking"
+  status: ENUM('packed', 'loaded', 'in_transit', 'unloaded')
+}
+
+entity Route {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255)
+  * origin_location_id: UUID <<FK>>
+  * destination_location_id: UUID <<FK>>
+  * distance_km: DECIMAL(10, 2)
+  * estimated_duration_hours: DECIMAL(10, 2)
+  type: ENUM('road', 'rail', 'sea', 'air')
+}
+
+entity RouteSegment {
+  + id: UUID <<PK>>
+  * route_id: UUID <<FK>>
+  * sequence_number: INTEGER
+  * start_location_id: UUID <<FK>>
+  * end_location_id: UUID <<FK>>
+  * transport_mode: ENUM('truck', 'train', 'ship', 'plane')
+  * carrier_organization_id: UUID <<FK>>
+}
+
+entity Location {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255)
+  * address_id: UUID <<FK>>
+  * geo_latitude: DECIMAL(9, 6)
+  * geo_longitude: DECIMAL(9, 6)
+  type: ENUM('port', 'airport', 'cross_dock', 'customer_site')
+}
+
+Warehouse ||--o{ Shipment : "originates from"
+Address ||--o{ Shipment : "destined for"
+Organization "1" -- "*" Shipment : "is carrier for"
+SalesOrderItem ||--o| Shipment : "is for"
+PurchaseOrderItem ||--o| Shipment : "is for"
+Shipment ||--o{ ShipmentItem : "contains"
+Batch ||--o{ ShipmentItem : "references"
+Location ||--o{ ShipmentItem : "is at"
+Shipment "1" -- "0..1" Route : "follows"
+Location ||--o{ Route : "is origin/destination"
+Route ||--o{ RouteSegment : "has"
+Location ||--o{ RouteSegment : "is start/end"
+Organization "1" -- "*" RouteSegment : "is carried by"
+
+
+' --- 5. Financial Management ---
+entity Invoice {
+  + id: UUID <<PK>>
+  * order_id: UUID <<FK>> "Can be SO or PO"
+  * issuing_organization_id: UUID <<FK>>
+  * receiving_organization_id: UUID <<FK>>
+  * invoice_date: TIMESTAMP
+  * due_date: TIMESTAMP
+  * total_amount: DECIMAL(19, 4)
+  * currency: VARCHAR(3)
+  * status: ENUM('draft', 'issued', 'paid', 'overdue', 'cancelled')
+  payment_terms: VARCHAR(100)
+}
+
+entity InvoiceLineItem {
+  + id: UUID <<PK>>
+  * invoice_id: UUID <<FK>>
+  * product_id: UUID <<FK>>
+  * quantity: DECIMAL(19, 4)
+  * unit_price: DECIMAL(19, 4)
+  line_total: DECIMAL(19, 4)
+  description: TEXT
+}
+
+entity Payment {
+  + id: UUID <<PK>>
+  * invoice_id: UUID <<FK>>
+  * payer_organization_id: UUID <<FK>>
+  * receiver_organization_id: UUID <<FK>>
+  * payment_date: TIMESTAMP
+  * amount: DECIMAL(19, 4)
+  * currency: VARCHAR(3)
+  * method: ENUM('bank_transfer', 'credit_card', 'e_wallet')
+  * status: ENUM('pending', 'completed', 'failed')
+  transaction_reference: VARCHAR(255) <<Unique>>
+}
+
+entity BankAccount {
+  + id: UUID <<PK>>
+  * organization_id: UUID <<FK>>
+  * bank_name: VARCHAR(255)
+  * account_number_encrypted: TEXT <<Unique>>
+  * account_holder_name: VARCHAR(255)
+  * currency: VARCHAR(3)
+  is_active: BOOLEAN
+}
+
+SalesOrder ||--o{ Invoice : "generates"
+PurchaseOrder ||--o{ Invoice : "receives"
+Organization "1" -- "*" Invoice : "issues"
+Organization "1" -- "*" Invoice : "receives"
+Invoice ||--o{ InvoiceLineItem : "contains"
+Product ||--o{ InvoiceLineItem : "references"
+Invoice ||--o{ Payment : "receives"
+Organization "1" -- "*" Payment : "makes"
+Organization "1" -- "*" Payment : "receives"
+Organization "1" -- "*" BankAccount : "holds"
+BankAccount ||--o{ Payment : "uses"
+
+
+' --- 6. Quality & Compliance ---
+entity QualityControlRecord {
+  + id: UUID <<PK>>
+  * batch_id: UUID <<FK>>
+  * inspected_by_user_id: UUID <<FK>>
+  * inspection_date: TIMESTAMP
+  * result: ENUM('pass', 'fail', 'partial_pass')
+  * defects_found: TEXT
+  * corrective_action_taken: TEXT
+  * inspection_type: ENUM('pre_production', 'in_production', 'post_production', 'receiving')
+}
+
+entity Certification {
+  + id: UUID <<PK>>
+  * organization_id: UUID <<FK>>
+  * name: VARCHAR(255) "e.g., ISO 9001, Organic"
+  * issuing_body: VARCHAR(255)
+  * issued_date: DATE
+  * expiry_date: DATE
+  * scope: TEXT
+}
+
+entity Regulation {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255) <<Unique>> "e.g., GDPR, FDA, Customs Tariff"
+  * jurisdiction_country_code: VARCHAR(3) <<FK>>
+  * description: TEXT
+  * effective_date: DATE
+  * version: VARCHAR(50)
+}
+
+entity ComplianceRecord {
+  + id: UUID <<PK>>
+  * organization_id: UUID <<FK>>
+  * regulation_id: UUID <<FK>>
+  * compliance_status: ENUM('compliant', 'non_compliant', 'audited')
+  * last_audit_date: DATE
+  * notes: TEXT
+}
+
+Batch ||--o{ QualityControlRecord : "has"
+User ||--o{ QualityControlRecord : "performed by"
+Organization ||--o{ Certification : "holds"
+Organization ||--o{ ComplianceRecord : "has"
+Regulation ||--o{ ComplianceRecord : "is for"
+Country ||--o{ Regulation : "applies in"
+
+
+' --- 7. Partner & Contract Management ---
+entity Contract {
+  + id: UUID <<PK>>
+  * party_a_organization_id: UUID <<FK>>
+  * party_b_organization_id: UUID <<FK>>
+  * type: ENUM('supply', 'service', 'transport', 'warehousing')
+  * effective_date: DATE
+  * expiry_date: DATE
+  * terms_and_conditions: TEXT
+  * status: ENUM('active', 'expired', 'terminated')
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity SLA {
+  + id: UUID <<PK>>
+  * contract_id: UUID <<FK>>
+  * metric_name: VARCHAR(255) "e.g., delivery_on_time_rate, defect_rate"
+  * target_value: DECIMAL(19, 4)
+  * unit: VARCHAR(50)
+  * penalty: TEXT
+}
+
+entity PartnerRating {
+  + id: UUID <<PK>>
+  * rated_organization_id: UUID <<FK>>
+  * rating_organization_id: UUID <<FK>>
+  * score: DECIMAL(5, 2) "e.g., 1-5"
+  * comment: TEXT
+  * rating_date: TIMESTAMP
+  type: ENUM('delivery_performance', 'quality', 'responsiveness')
+}
+
+Organization "1" -- "*" Contract : "is party A"
+Organization "1" -- "*" Contract : "is party B"
+Contract ||--o{ SLA : "defines"
+Organization "1" -- "*" PartnerRating : "rates"
+Organization "1" -- "*" PartnerRating : "is rated by"
+
+
+' --- 8. Analytics & Reporting ---
+entity DashboardConfiguration {
+  + id: UUID <<PK>>
+  * user_id: UUID <<FK>>
+  * name: VARCHAR(255)
+  * configuration_json: JSONB "e.g., widget positions, data sources"
+  is_public: BOOLEAN
+}
+
+entity ReportDefinition {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255) <<Unique>>
+  * description: TEXT
+  * report_query: TEXT "SQL or specific query language"
+  * schedule_cron: VARCHAR(50) "e.g., '0 0 * * *' for daily"
+  * format: ENUM('csv', 'pdf', 'excel')
+  last_generated_at: TIMESTAMP
+}
+
+entity GeneratedReport {
+  + id: UUID <<PK>>
+  * report_definition_id: UUID <<FK>>
+  * generated_at: TIMESTAMP
+  * file_path: VARCHAR(255) "S3 or Blob Storage path"
+  * status: ENUM('success', 'failed')
+  record_count: INTEGER
+}
+
+User ||--o{ DashboardConfiguration : "configures"
+ReportDefinition ||--o{ GeneratedReport : "generates"
+
+
+' --- 9. Notifications & Events ---
+entity NotificationTemplate {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255) <<Unique>>
+  * type: ENUM('email', 'sms', 'in_app')
+  * subject_template: TEXT
+  * body_template: TEXT
+  * variables_json: JSONB "e.g., {'order_id': 'Order ID'}"
+}
+
+entity EventLog {
+  + id: UUID <<PK>>
+  * event_type: VARCHAR(100) "e.g., order_status_change, shipment_delay"
+  * entity_type: VARCHAR(100) "e.g., Order, Shipment"
+  * entity_id: UUID
+  * occurred_at: TIMESTAMP
+  * details_json: JSONB "Contextual data"
+  * generated_by_user_id: UUID <<FK>> "Optional"
+}
+
+entity NotificationDelivery {
+  + id: UUID <<PK>>
+  * notification_template_id: UUID <<FK>>
+  * recipient_user_id: UUID <<FK>>
+  * delivered_at: TIMESTAMP
+  * status: ENUM('sent', 'failed', 'read')
+  * external_reference_id: VARCHAR(255) "e.g., Mailgun message ID"
+}
+
+User ||--o{ NotificationDelivery : "receives"
+NotificationTemplate ||--o{ NotificationDelivery : "is based on"
+EventLog ||--o{ NotificationDelivery : "can trigger"
+
+' --- 10. Financial Transactions (External/Internal) ---
+entity FinancialTransaction {
+  + id: UUID <<PK>>
+  * type: ENUM('deposit', 'withdrawal', 'transfer', 'fee', 'chargeback')
+  * amount: DECIMAL(19, 4)
+  * currency: VARCHAR(3)
+  * transaction_date: TIMESTAMP
+  * initiating_organization_id: UUID <<FK>>
+  * receiving_organization_id: UUID <<FK>>
+  * status: ENUM('pending', 'completed', 'failed', 'reversed')
+  reference_number: VARCHAR(255) <<Unique>>
+  related_invoice_id: UUID <<FK>>
+  related_shipment_id: UUID <<FK>>
+}
+
+Invoice ||--o{ FinancialTransaction : "settles"
+Payment ||--o{ FinancialTransaction : "maps to"
+Shipment ||--o{ FinancialTransaction : "incurs cost for"
+
+' --- 12. IoT & Sensor Data (Advanced) ---
+entity SensorType {
+  + id: UUID <<PK>>
+  * name: VARCHAR(100) <<Unique>> "e.g., Temperature, Humidity, GPS"
+  * unit: VARCHAR(20)
+  description: TEXT
+}
+
+entity Sensor {
+  + id: UUID <<PK>>
+  * sensor_type_id: UUID <<FK>>
+  * device_id: UUID <<FK>> "e.g., a smart container, truck IoT device"
+  * serial_number: VARCHAR(255) <<Unique>>
+  * last_calibration_date: TIMESTAMP
+  status: ENUM('active', 'inactive')
+}
+
+entity SensorReading {
+  + id: UUID <<PK>>
+  * sensor_id: UUID <<FK>>
+  * timestamp: TIMESTAMP
+  * value: DECIMAL(19, 4)
+  * raw_data: JSONB "e.g., {'battery': '80%'}"
+}
+
+entity IoTDevice {
+  + id: UUID <<PK>>
+  * device_identifier: VARCHAR(255) <<Unique>>
+  * type: ENUM('container_sensor_hub', 'truck_tracker', 'warehouse_monitor')
+  * associated_entity_id: UUID <<FK>> "e.g., Shipment ID, Warehouse ID"
+  status: ENUM('active', 'inactive', 'maintenance')
+  last_report_at: TIMESTAMP
+}
+
+SensorType ||--o{ Sensor : "defines"
+IoTDevice ||--o{ Sensor : "contains"
+Sensor ||--o{ SensorReading : "generates"
+IoTDevice ||--o{ Shipment : "tracks"
+IoTDevice ||--o{ Warehouse : "monitors"
+
+' --- 13. Sustainability & Compliance Tracking (ESG) ---
+entity CarbonFootprintRecord {
+  + id: UUID <<PK>>
+  * entity_type: ENUM('product', 'shipment', 'warehouse', 'organization')
+  * entity_id: UUID
+  * calculation_date: TIMESTAMP
+  * co2e_emissions_kg: DECIMAL(19, 4)
+  * calculation_method: TEXT
+  source_data_json: JSONB
+}
+
+entity ComplianceRequirement {
+  + id: UUID <<PK>>
+  * name: VARCHAR(255) <<Unique>> "e.g., RoHS, REACH, Fair Trade"
+  * description: TEXT
+  * governing_body: VARCHAR(255)
+  * effective_date: DATE
+}
+
+entity EntityComplianceStatus {
+  + id: UUID <<PK>>
+  * entity_type: ENUM('product', 'organization')
+  * entity_id: UUID
+  * compliance_requirement_id: UUID <<FK>>
+  * status: ENUM('compliant', 'non_compliant', 'pending_assessment')
+  * last_checked_date: TIMESTAMP
+  * evidence_document_url: VARCHAR(255)
+}
+
+Product ||--o{ CarbonFootprintRecord : "has"
+Shipment ||--o{ CarbonFootprintRecord : "generates"
+Warehouse ||--o{ CarbonFootprintRecord : "contributes to"
+Organization ||--o{ CarbonFootprintRecord : "contributes to"
+ComplianceRequirement ||--o{ EntityComplianceStatus : "is for"
+Product ||--o{ EntityComplianceStatus : "reports"
+Organization ||--o{ EntityComplianceStatus : "reports"
+
+' --- Remaining relationships defined at the end for clarity and to ensure all entities are defined first ---
+Organization "1" -- "0..*" FinancialTransaction : "initiates/receives"
+Organization "1" -- "0..*" BankAccount : "has"
+BankAccount ||--o{ Payment : "uses"
+
+@enduml

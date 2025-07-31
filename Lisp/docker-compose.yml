@@ -1,0 +1,12 @@
+services:
+  lisp:
+    build: .
+    image: lisp-env
+    container_name: lisp-env
+    stdin_open: true
+    tty: true
+    environment:
+      - COLUMNS=80
+    volumes:
+      - .:/usr/src/app
+
