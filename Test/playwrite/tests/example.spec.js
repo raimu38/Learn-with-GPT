@@ -25,14 +25,11 @@ async function waitForServer(url, timeout = 5000) {
 }
 
 test.beforeAll(async () => {
-  // node server.js を起動
   serverProcess = spawn("node", ["server.js"], { stdio: "inherit" });
-  // サーバーが起動するまで待つ
   await waitForServer("http://localhost:3000/");
 });
 
 test.afterAll(() => {
-  // サーバープロセスを切る
   if (serverProcess) {
     serverProcess.kill();
   }
